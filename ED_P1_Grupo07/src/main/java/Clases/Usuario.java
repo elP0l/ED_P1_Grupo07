@@ -8,6 +8,13 @@ package Clases;
  *
  * @author vecto
  */
-public abstract class Usuario {
+public class Usuario {
+    
+    private String correo;
+    private String contra;
+    private String nombre;
+    private String apellido;
+    private int edad;
+    
     
 }

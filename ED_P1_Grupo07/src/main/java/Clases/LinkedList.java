@@ -6,8 +6,9 @@ package Clases;
 
 /**
  *
- * @author vecto
+ * @author José Marin
  */
-public class Vehiculos {
+public class LinkedList<E> implements List<E> {
+    
     
 }

@@ -8,6 +8,13 @@ package Clases;
  *
  * @author vecto
  */
-public class Camion {
+public class Camion extends Vehiculo {
+    
+    private String color;
+    
+    public Camion(String placa, String marca, String modelo, int anio, String ubiActual, String color) {
+        super(placa, marca, modelo, anio, ubiActual);
+        this.color = color;
+    }
     
 }

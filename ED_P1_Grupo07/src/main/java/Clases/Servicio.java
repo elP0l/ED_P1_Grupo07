@@ -8,6 +8,6 @@ package Clases;
  *
  * @author vecto
  */
-public class Servicios {
+public class Servicio {
     
 }
