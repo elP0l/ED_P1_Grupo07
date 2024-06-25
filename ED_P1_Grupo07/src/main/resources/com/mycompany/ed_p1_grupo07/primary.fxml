@@ -1,16 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.ed_p1_grupo07.PrimaryController">
-   <children>
-      <Label text="Primary View" />
-      <Button fx:id="primaryButton" text="Switch to Secondary View" onAction="#switchToSecondary"/>
-   </children>
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
-</VBox>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.ed_p1_grupo07.PrimaryController">
+   <top>
+      <Label fx:id="nombre1" contentDisplay="BOTTOM" text="PAGINA NOMBRE" textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+   </top>
+   <left>
+      <VBox fx:id="h1" prefHeight="347.0" prefWidth="169.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="us1" text="Usuario:" wrapText="true">
+               <VBox.margin>
+                  <Insets left="82.0" top="100.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Arial Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="con1" text="Contraseña:" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="55.0" top="15.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </left>
+   <center>
+      <VBox fx:id="h2" fillWidth="false" maxHeight="-Infinity" minHeight="100.0" minWidth="100.0" prefHeight="347.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="usu2" prefHeight="25.0" prefWidth="300.0">
+               <VBox.margin>
+                  <Insets top="100.0" />
+               </VBox.margin>
+            </TextField>
+            <PasswordField fx:id="con2" prefHeight="25.0" prefWidth="300.0">
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </PasswordField>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox prefHeight="140.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="ini1" mnemonicParsing="false" onAction="#siguiente" text="ENTRAR">
+               <HBox.margin>
+                  <Insets left="120.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="Arial Black" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="regi1" mnemonicParsing="false" text="REGISTRARSE" wrapText="true">
+               <HBox.margin>
+                  <Insets left="120.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="Arial Black" size="13.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
