@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.ed_p1_grupo07.PrimaryController">
    <top>
       <Label fx:id="nombre1" contentDisplay="BOTTOM" text="PAGINA NOMBRE" textAlignment="CENTER" BorderPane.alignment="CENTER">
@@ -22,7 +21,7 @@
    <left>
       <VBox fx:id="h1" prefHeight="347.0" prefWidth="169.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="us1" text="Usuario:" wrapText="true">
+            <Label fx:id="us1" text="Correo:" wrapText="true">
                <VBox.margin>
                   <Insets left="82.0" top="100.0" />
                </VBox.margin>
@@ -63,7 +62,7 @@
    <bottom>
       <HBox prefHeight="140.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="ini1" mnemonicParsing="false" onAction="#siguiente" text="ENTRAR">
+            <Button fx:id="ini1" mnemonicParsing="false" onAction="#iniciarSesion" text="ENTRAR">
                <HBox.margin>
                   <Insets left="120.0" />
                </HBox.margin>
@@ -71,7 +70,7 @@
                   <Font name="Arial Black" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="regi1" mnemonicParsing="false" text="REGISTRARSE" wrapText="true">
+            <Button fx:id="regi1" mnemonicParsing="false" onAction="#siguiente" text="REGISTRARSE" wrapText="true">
                <HBox.margin>
                   <Insets left="120.0" />
                </HBox.margin>
