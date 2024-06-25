@@ -11,6 +11,7 @@ package Clases;
 public class Moto extends Vehiculo {
     
     private String color;
+    public final int numRuedas = 2;
     
     public Moto(String placa, String marca, String modelo, int anio, String ubiActual,String color) {
         super(placa, marca, modelo, anio, ubiActual);

@@ -11,10 +11,14 @@ package Clases;
 public class Camion extends Vehiculo {
     
     private String color;
+    private int numRuedas;
     
-    public Camion(String placa, String marca, String modelo, int anio, String ubiActual, String color) {
+    public Camion(String placa, String marca, String modelo, int anio, String ubiActual, String color, int numRuedas) {
         super(placa, marca, modelo, anio, ubiActual);
         this.color = color;
+        this.numRuedas = numRuedas;
     }
+    
+    
     
 }

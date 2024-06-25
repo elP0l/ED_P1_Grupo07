@@ -52,7 +52,7 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private void siguiente(ActionEvent event) throws IOException {
-        App.setRoot("secundary");
+        App.setRoot("secondary");
     }
     
 }

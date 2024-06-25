@@ -17,8 +17,10 @@ public abstract class Vehiculo {
     private double peso;
     private String ubiActual;
     private double precio;
+    private int km;
     LinkedList<Accidente> lAccidentes = new LinkedList<>();
     LinkedList<Servicio> lServicios = new LinkedList<>();
+    DoublyCircularLinkedList<String> lImagenes = new DoublyCircularLinkedList<>();
 
     public Vehiculo(String placa, String marca, String modelo, int anio, String ubiActual) {
         this.placa = placa;
@@ -84,6 +86,10 @@ public abstract class Vehiculo {
         return lServicios;
     }
 
+    public DoublyCircularLinkedList<String> getlImagenes() {
+        return lImagenes;
+    }
+    
     public double getPrecio() {
         return precio;
     }
@@ -91,6 +97,15 @@ public abstract class Vehiculo {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
+
+    public int getKm() {
+        return km;
+    }
+
+    public void setKm(int km) {
+        this.km = km;
+    }
+    
     
     
 }
