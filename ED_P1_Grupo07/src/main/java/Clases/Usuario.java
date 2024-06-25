@@ -77,19 +77,18 @@ public class Usuario {
         return this.correo.equals(correo) && this.contra.equals(contra);
     }
     public static Usuario Texto(String linea) {
-        String[] partes = linea.split(";"); 
+        String[] partes = linea.split(","); 
         if (partes.length >= 5) { 
-            String correo = partes[0].trim();
-            String contra = partes[1].trim();
-            String nombre = partes[2].trim();
-            String apellido = partes[3].trim();
-            int edad = Integer.parseInt(partes[4].trim());
+            String correo = partes[0];
+            String contra = partes[1];
+            String nombre = partes[2];
+            String apellido = partes[3];
+            int edad = Integer.parseInt(partes[4]);
             return new Usuario(correo, contra, nombre, apellido, edad);
         } else {
             throw new IllegalArgumentException("Formato de línea incorrecto para crear Usuario");
         }
-    }
-     public void guardarEnArchivo(String rutaArchivo) throws IOException {
+}     public void guardarEnArchivo(String rutaArchivo) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo, true));
         writer.write(toString());
         writer.newLine();

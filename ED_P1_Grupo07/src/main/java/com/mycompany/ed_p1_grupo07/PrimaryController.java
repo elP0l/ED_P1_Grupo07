@@ -58,10 +58,10 @@ public class PrimaryController implements Initializable {
    private void iniciarSesion() {
        String correo = usu2.getText();
        String contra = con2.getText();
-       Usuario usuario = null;
+       Usuario usuario;
         try {
             usuario = buscarUsuario(correo);
-            if (usuario.getCorreo().equals(usu2) && usuario.getContra().equals(contra)) {
+            if (usuario!=null&& usuario.getContra().equals(contra)) {
                 u = usuario;
                 System.out.println("Inicio de sesión exitoso");
                 Alert alert = new Alert(AlertType.INFORMATION);
