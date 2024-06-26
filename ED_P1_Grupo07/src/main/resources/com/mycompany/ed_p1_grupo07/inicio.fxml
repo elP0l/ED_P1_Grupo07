@@ -20,12 +20,12 @@
                <children>
                   <AnchorPane prefHeight="143.0" prefWidth="314.0">
                      <children>
-                        <Label layoutX="38.0" text="MotorsEC">
+                        <Label layoutX="35.0" text="MotorsEC">
                            <font>
                               <Font size="55.0" />
                            </font>
                         </Label>
-                        <ImageView fitHeight="46.0" fitWidth="77.0" layoutX="119.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgBand" fitHeight="46.0" fitWidth="77.0" layoutX="119.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../../../../images/banderaEc.png" />
                            </image>

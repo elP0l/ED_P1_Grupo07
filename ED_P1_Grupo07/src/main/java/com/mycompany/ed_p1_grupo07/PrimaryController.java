@@ -83,11 +83,11 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private void siguiente(ActionEvent event) throws IOException {
-        App.setRoot("secondary");
+        App.setRoot("inicio");
     }
     private Usuario buscarUsuario(String correo) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("usuarios.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader(App.pathFiles+"usuarios.txt"));
             String linea;
             while ((linea = reader.readLine()) != null) {
                 Usuario usuario = Usuario.Texto(linea);
