@@ -19,7 +19,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 /**
  * FXML Controller class
@@ -47,13 +52,23 @@ public class PrimaryController implements Initializable {
     @FXML
     private PasswordField con2;
     private Usuario u;
+    @FXML
+    private BorderPane pane;
+    @FXML
+    private ImageView img1;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        try {
+            BackgroundFill backgroundFill = new BackgroundFill(Color.BEIGE, null, null);     
+            pane.setBackground(new Background(backgroundFill));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+    
     @FXML
    private void iniciarSesion() {
        String correo = usu2.getText();
@@ -77,11 +92,10 @@ public class PrimaryController implements Initializable {
             System.out.println("Error al buscar el usuario");
             e.printStackTrace();
         }
-}
+   }
 
     
 
-    @FXML
     private void siguiente(ActionEvent event) throws IOException {
         App.setRoot("inicio");
     }
@@ -103,6 +117,11 @@ public class PrimaryController implements Initializable {
           
         }
         return null;
+    }
+
+    @FXML
+    private void siguiente2(ActionEvent event) throws IOException {
+        App.setRoot("secondary");
     }
 }
     

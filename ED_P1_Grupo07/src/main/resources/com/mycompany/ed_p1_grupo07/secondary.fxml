@@ -5,12 +5,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.ed_p1_grupo07.SecondaryController">
+<BorderPane fx:id="pane1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#initialize" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.ed_p1_grupo07.SecondaryController">
    <top>
       <Label text="REGISTRO DE USUARIO" textAlignment="CENTER" BorderPane.alignment="CENTER">
          <font>
@@ -19,7 +21,7 @@
       </Label>
    </top>
    <left>
-      <VBox prefHeight="264.0" prefWidth="184.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="vBox2" prefHeight="264.0" prefWidth="184.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="nom1" text="NOMBRE:">
                <font>
@@ -68,10 +70,28 @@
       </VBox>
    </left>
    <bottom>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <HBox prefHeight="113.0" prefWidth="591.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="img2" fitHeight="106.0" fitWidth="189.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="70.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@../../../images/auto.gif" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="130.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@../../../images/auto2.gif" />
+               </image>
+            </ImageView>
+         </children></HBox>
    </bottom>
    <center>
-      <VBox prefHeight="264.0" prefWidth="243.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="vBox1" prefHeight="248.0" prefWidth="492.0" BorderPane.alignment="CENTER">
          <children>
             <TextField fx:id="nom2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                <VBox.margin>
@@ -102,7 +122,7 @@
       </VBox>
    </center>
    <right>
-      <VBox prefHeight="213.0" prefWidth="166.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="vBox" prefHeight="213.0" prefWidth="166.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="reg3" mnemonicParsing="false" onAction="#registrar" text="REGISTRAR">
                <VBox.margin>
