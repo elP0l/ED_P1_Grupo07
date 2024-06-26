@@ -13,10 +13,20 @@ import java.util.Scanner;
 public class Catalogo {
     
     Scanner sc = new Scanner(System.in);
-    LinkedList<Vehiculo> lVehiculos = new LinkedList<>();
-    
-    public void verCatalogo(){
-        
+    private static LinkedList<Vehiculo> lVehiculos = new LinkedList<>();
+
+    public Catalogo() {
     }
+
+    public static LinkedList<Vehiculo> getlVehiculos() {
+        return lVehiculos;
+    }
+
+    public static void setlVehiculos(LinkedList<Vehiculo> lVehiculos) {
+        Catalogo.lVehiculos = lVehiculos;
+    }
+    
+    
+    
     
 }

@@ -8,7 +8,7 @@ package Clases;
  *
  * @author vecto
  */
-public abstract class Vehiculo {
+public class Vehiculo {
     
     private String placa;
     private String marca;
@@ -18,16 +18,20 @@ public abstract class Vehiculo {
     private String ubiActual;
     private double precio;
     private int km;
+    private TipoVehi tipoVehi;
+    private String color;
+    private int numLlantas;
     LinkedList<Accidente> lAccidentes = new LinkedList<>();
     LinkedList<Servicio> lServicios = new LinkedList<>();
     DoublyCircularLinkedList<String> lImagenes = new DoublyCircularLinkedList<>();
 
-    public Vehiculo(String placa, String marca, String modelo, int anio, String ubiActual) {
+    public Vehiculo(String placa, String marca, String modelo, int anio, String ubiActual, TipoVehi tipoVehi) {
         this.placa = placa;
         this.marca = marca;
         this.modelo = modelo;
         this.anio = anio;
         this.ubiActual = ubiActual;
+        this.tipoVehi = tipoVehi;
     }
 
     public String getPlaca() {
@@ -104,6 +108,31 @@ public abstract class Vehiculo {
 
     public void setKm(int km) {
         this.km = km;
+    }
+
+    public TipoVehi getTipoVehi() {
+        return tipoVehi;
+    }
+
+    public void setTipoVehi(TipoVehi tipoVehi) {
+        this.tipoVehi = tipoVehi;
+        
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public int getNumLlantas() {
+        return numLlantas;
+    }
+
+    public void setNumLlantas(int numLlantas) {
+        this.numLlantas = numLlantas;
     }
     
     
