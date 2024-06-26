@@ -15,7 +15,9 @@ public class DoublyCircularLinkedList<E> implements List<E> {
     
     private DoublyCircularNodeList<E> last;
     
-    
+    public E get(int index){
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
     @Override
     public E removeLast() {
