@@ -19,25 +19,4 @@ public class Catalogo {
         
     }
     
-    public Vehiculo crearVehiculo(){
-        Vehiculo vehi = null;
-        System.out.print("Ingrese los siguientes datos de su vehículo: ");
-        
-        System.out.print("Ingrese la placa: ");
-        String placa = sc.nextLine();
-        System.out.print("Ingrese la marca: ");
-        String marca = sc.nextLine();
-        System.out.print("Ingrese el modelo: ");
-        String modelo = sc.nextLine();
-        System.out.print("Ingrese el año: ");
-        int anio = sc.nextInt();
-        sc.nextLine();
-        System.out.print("Ingrese la ubicación actual: ");
-        String ubiAct = sc.nextLine();
-        
-        
-        //vehi = new (placa,);
-        return vehi;     
-    }
-    
 }
