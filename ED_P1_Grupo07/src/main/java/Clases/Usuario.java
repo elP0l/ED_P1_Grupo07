@@ -18,9 +18,9 @@ public class Usuario {
     private String contra;
     private String nombre;
     private String apellido;
-    private int edad;
+    private String edad;
 
-    public Usuario(String correo, String contra, String nombre, String apellido, int edad) {
+    public Usuario(String correo, String contra, String nombre, String apellido, String edad) {
         this.correo = correo;
         this.contra = contra;
         this.nombre = nombre;
@@ -66,11 +66,11 @@ public class Usuario {
         this.apellido = apellido;
     }
 
-    public int getEdad() {
+    public String getEdad() {
         return edad;
     }
 
-    public void setEdad(int edad) {
+    public void setEdad(String edad) {
         this.edad = edad;
     }
     public boolean validarCorreo(String correo, String contra) {
@@ -83,7 +83,7 @@ public class Usuario {
             String contra = partes[1];
             String nombre = partes[2];
             String apellido = partes[3];
-            int edad = Integer.parseInt(partes[4]);
+            String edad = partes[4];
             return new Usuario(correo, contra, nombre, apellido, edad);
         } else {
             throw new IllegalArgumentException("Formato de línea incorrecto para crear Usuario");

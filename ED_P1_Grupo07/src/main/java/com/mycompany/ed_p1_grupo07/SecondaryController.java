@@ -45,7 +45,8 @@ public class SecondaryController {
         String apellido = ap2.getText();
         String correo = co2.getText();
         String contra = con2.getText();
-        Usuario nuevoUsuario = new Usuario(correo, contra, nombre, apellido, 30);
+        String edad = ed2.getText();
+        Usuario nuevoUsuario = new Usuario(correo, contra, nombre, apellido, edad);
         try {
             nuevoUsuario.guardarEnArchivo("usuarios.txt");
             System.out.println("Usuario registrado correctamente");
