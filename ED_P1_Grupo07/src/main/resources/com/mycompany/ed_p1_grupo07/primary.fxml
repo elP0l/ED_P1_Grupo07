@@ -5,12 +5,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.ed_p1_grupo07.PrimaryController">
+<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.ed_p1_grupo07.PrimaryController">
    <top>
       <Label fx:id="nombre1" contentDisplay="BOTTOM" text="PAGINA NOMBRE" textAlignment="CENTER" BorderPane.alignment="CENTER">
          <font>
@@ -46,9 +47,14 @@
    <center>
       <VBox fx:id="h2" fillWidth="false" maxHeight="-Infinity" minHeight="100.0" minWidth="100.0" prefHeight="347.0" BorderPane.alignment="CENTER">
          <children>
+            <ImageView fx:id="img1" fitHeight="77.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </ImageView>
             <TextField fx:id="usu2" prefHeight="25.0" prefWidth="300.0">
                <VBox.margin>
-                  <Insets top="100.0" />
+                  <Insets top="20.0" />
                </VBox.margin>
             </TextField>
             <PasswordField fx:id="con2" prefHeight="25.0" prefWidth="300.0">
@@ -70,7 +76,7 @@
                   <Font name="Arial Black" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="regi1" mnemonicParsing="false" onAction="#siguiente" text="REGISTRARSE" wrapText="true">
+            <Button fx:id="regi1" mnemonicParsing="false" onAction="#siguiente2" text="REGISTRARSE" wrapText="true">
                <HBox.margin>
                   <Insets left="120.0" />
                </HBox.margin>
