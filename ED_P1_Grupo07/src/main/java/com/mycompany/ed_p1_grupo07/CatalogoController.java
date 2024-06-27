@@ -11,6 +11,8 @@ import Clases.Vehiculo;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -18,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -43,10 +46,12 @@ public class CatalogoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        CbxVehiculo.getItems().addAll("auto","moto","camion","maquinaria");
+        CbxOrder.getItems().addAll("precio","año");
     }    
     
     @FXML
-    private void filterVehiculo(ActionEvent event) {
+    private LinkedList<Vehiculo> filterVehiculo(ActionEvent event) {
         LinkedList<Vehiculo> lFiltrada = new LinkedList<>();
         NodeList<Vehiculo> node;
         TipoVehi tpV = TipoVehi.valueOf(CbxVehiculo.getSelectionModel().getSelectedItem());
@@ -56,24 +61,36 @@ public class CatalogoController implements Initializable {
            }            
         }
         
+        Iterator<Vehiculo> it = lFiltrada.iterator();
         int ctrl = 0;
         HBox cont = new HBox();
-        for (node = lFiltrada.getHeader();node!=null;node = node.getNext()){
+        while (it.hasNext()){
+            cont.setSpacing(15);
+            cont.setAlignment(Pos.CENTER);
+            Vehiculo vehi = it.next();
             VBox cont2 = new VBox();
+            cont2.setSpacing(15);
+            cont2.setAlignment(Pos.TOP_LEFT);
             ImageView imgVehi = new ImageView();
-            try(FileInputStream input = new FileInputStream(App.pathImages+node.getContent().getlImagenes().get(0))){
+            try(FileInputStream input = new FileInputStream(App.pathImages+vehi.getlImagenes().get(0))){
                 Image imgv = new Image(input);            
                 imgVehi.setImage(imgv);
             }catch (IOException ex) {            
             }
             cont2.getChildren().add(imgVehi);
-            Label lb = new Label(node.getContent().getModelo());
+            Label lb = new Label(vehi.getModelo());
             cont2.getChildren().add(lb);
-            lb = new Label(String.valueOf(node.getContent().getPrecio()));
-            cont2.getChildren().add(lb);
-            lb = new Label(String.valueOf(node.getContent().getAnio()));
-            cont2.getChildren().add(lb);
-            lb = new Label(String.valueOf(node.getContent().getUbiActual()));
+            HBox cont3 = new HBox();
+            cont3.setSpacing(15);
+            cont3.setAlignment(Pos.CENTER);
+            lb = new Label(String.valueOf(vehi.getPrecio()));
+            cont3.getChildren().add(lb);
+            lb = new Label(String.valueOf(vehi.getAnio()));
+            cont3.getChildren().add(lb);
+            lb = new Label(String.valueOf(vehi.getKm()));
+            cont3.getChildren().add(lb);
+            cont2.getChildren().add(cont3);
+            lb = new Label(vehi.getUbiActual());
             cont2.getChildren().add(lb);
             cont.getChildren().add(cont2);
             contenedor.getChildren().add(cont);
@@ -83,11 +100,22 @@ public class CatalogoController implements Initializable {
                 ctrl=0;
             }
         }
+        return lFiltrada;
     }
 
     @FXML
     private void filterOrder(ActionEvent event) {
+        Comparator<Vehiculo> porAnio = (Vehiculo b1, Vehiculo b2)->{
+            if(b1.getAnio()-b2.getAnio()==0){
+                return b1.getPrecio().compareTo(b2.getPrecio());
+            }
+            return b1.getAnio()-b2.getAnio();
+        };
         
+        LinkedList<Vehiculo> lVehis = new LinkedList<>();
+        if (CbxVehiculo.getSelectionModel().getSelectedItem()!=null){
+            
+        }
     }
 
 }

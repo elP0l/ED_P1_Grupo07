@@ -4,6 +4,8 @@
  */
 package Clases;
 
+import java.util.Objects;
+
 /**
  *
  * @author vecto
@@ -133,6 +135,41 @@ public class Vehiculo {
 
     public void setNumLlantas(int numLlantas) {
         this.numLlantas = numLlantas;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.placa);
+        hash = 29 * hash + Objects.hashCode(this.marca);
+        hash = 29 * hash + Objects.hashCode(this.modelo);
+        hash = 29 * hash + this.anio;
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.peso) ^ (Double.doubleToLongBits(this.peso) >>> 32));
+        hash = 29 * hash + Objects.hashCode(this.ubiActual);
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.precio) ^ (Double.doubleToLongBits(this.precio) >>> 32));
+        hash = 29 * hash + this.km;
+        hash = 29 * hash + Objects.hashCode(this.tipoVehi);
+        hash = 29 * hash + Objects.hashCode(this.color);
+        hash = 29 * hash + this.numLlantas;
+        hash = 29 * hash + Objects.hashCode(this.lAccidentes);
+        hash = 29 * hash + Objects.hashCode(this.lServicios);
+        hash = 29 * hash + Objects.hashCode(this.lImagenes);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Vehiculo other = (Vehiculo) obj;
+        return Objects.equals(this.placa, other.placa);
     }
     
     
