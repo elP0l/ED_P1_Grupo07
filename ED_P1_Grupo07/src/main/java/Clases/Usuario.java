@@ -88,7 +88,8 @@ public class Usuario {
         } else {
             throw new IllegalArgumentException("Formato de línea incorrecto para crear Usuario");
         }
-}     public void guardarEnArchivo(String rutaArchivo) throws IOException {
+    }
+    public void guardarEnArchivo(String rutaArchivo) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo, true));
         writer.write(toString());
         writer.newLine();

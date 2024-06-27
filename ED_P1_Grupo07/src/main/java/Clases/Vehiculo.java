@@ -13,13 +13,10 @@ import java.util.Objects;
  *
  * @author vecto
  */
-<<<<<<< HEAD
-public class Vehiculo {
-    private String ciud;
-=======
-public class Vehiculo implements Comparable<Vehiculo>{
+
     
->>>>>>> 50d62da2a23f25dff6aff945182c86a2ef6365ce
+public class Vehiculo implements Comparable<Vehiculo>{
+    private String ciud;
     private String placa;
     private String marca;
     private String modelo;
@@ -178,27 +175,40 @@ public class Vehiculo implements Comparable<Vehiculo>{
         final Vehiculo other = (Vehiculo) obj;
         return Objects.equals(this.placa, other.placa);
     }
-<<<<<<< HEAD
+
     public void guardarEnArchivo(String rutaArchivo) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo, true));
         writer.write(toString());
         writer.newLine();
         writer.close();
     }
-=======
 
     @Override
     public int compareTo(Vehiculo o) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    
->>>>>>> 50d62da2a23f25dff6aff945182c86a2ef6365ce
     
     @Override
     public String toString() {
         
-        return tipoVehi+","+ marca + "," + modelo + "," +Subtipo+"," +anio + "," + peso + "," +km+ "," +ubiActual+ "," +ciud;  }
+        return tipoVehi+","+ marca + "," + modelo + "," +Subtipo+"," +anio + "," +km+ "," +ubiActual+ "," +ciud;  }
+    
+    public static Vehiculo Texto(String linea) {
+        String[] partes = linea.split(","); 
+        TipoVehi tpv = TipoVehi.valueOf(partes[0]);
+        String marca = partes[1];
+        String modelo = partes[2];
+        String subtipo = partes[3];
+        Integer anio = Integer.valueOf(partes[4]);
+        Integer km = Integer.valueOf(partes[5]);
+        String ubiAct = partes[6];
+        String ciud = partes[7];
+
+        return new Vehiculo(ubiAct, ciud, marca, modelo, anio,tpv, subtipo);       
+        
+    }
+    
+    
 }
 
     

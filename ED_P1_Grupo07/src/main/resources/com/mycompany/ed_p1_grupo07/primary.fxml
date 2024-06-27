@@ -13,7 +13,7 @@
 
 <BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.ed_p1_grupo07.PrimaryController">
    <top>
-      <Label fx:id="nombre1" contentDisplay="BOTTOM" text="PAGINA NOMBRE" textAlignment="CENTER" BorderPane.alignment="CENTER">
+      <Label fx:id="nombre1" contentDisplay="BOTTOM" text="MotorsEC" textAlignment="CENTER" BorderPane.alignment="CENTER">
          <font>
             <Font size="36.0" />
          </font>

@@ -4,11 +4,15 @@
  */
 package com.mycompany.ed_p1_grupo07;
 
+import Clases.Catalogo;
 import Clases.LinkedList;
 import Clases.NodeList;
 import Clases.TipoVehi;
+import Clases.Usuario;
 import Clases.Vehiculo;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
@@ -47,9 +51,9 @@ public class CatalogoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        CbxVehiculo.getItems().addAll("auto","moto","camion","maquinaria");
-        CbxOrder.getItems().addAll("precio","año");
-        
+        CbxVehiculo.getItems().addAll("AUTOS","MOTOS","CAMIONES","MAQUINARIAS");
+        CbxOrder.getItems().addAll("AÑO");
+        cargarVehiculos();
     }    
     
     @FXML
@@ -68,6 +72,7 @@ public class CatalogoController implements Initializable {
     @FXML
     public void llenarContenedores(LinkedList<Vehiculo> lV){
         Iterator<Vehiculo> it = lV.iterator();
+        System.out.println(lV);
         int ctrl = 0;
         HBox cont = new HBox();
         while (it.hasNext()){
@@ -77,6 +82,7 @@ public class CatalogoController implements Initializable {
             VBox cont2 = new VBox();
             cont2.setSpacing(15);
             cont2.setAlignment(Pos.TOP_LEFT);
+            /*
             ImageView imgVehi = new ImageView();
             try(FileInputStream input = new FileInputStream(App.pathImages+vehi.getlImagenes().get(0))){
                 Image imgv = new Image(input);            
@@ -84,20 +90,21 @@ public class CatalogoController implements Initializable {
             }catch (IOException ex) {            
             }
             cont2.getChildren().add(imgVehi);
-            Label lb = new Label(vehi.getModelo());
-            cont2.getChildren().add(lb);
+            */
+            Label lb1 = new Label(vehi.getModelo());
+            cont2.getChildren().add(lb1);
             HBox cont3 = new HBox();
             cont3.setSpacing(15);
             cont3.setAlignment(Pos.CENTER);
-            lb = new Label(String.valueOf(vehi.getPrecio()));
-            cont3.getChildren().add(lb);
-            lb = new Label(String.valueOf(vehi.getAnio()));
-            cont3.getChildren().add(lb);
-            lb = new Label(String.valueOf(vehi.getKm()));
-            cont3.getChildren().add(lb);
+            //lb = new Label(String.valueOf(vehi.getPrecio()));
+            //cont3.getChildren().add(lb);
+            Label lb2 = new Label(String.valueOf(vehi.getAnio()));
+            cont3.getChildren().add(lb2);
+            Label lb3 = new Label(String.valueOf(vehi.getKm()));
+            cont3.getChildren().add(lb3);
             cont2.getChildren().add(cont3);
-            lb = new Label(vehi.getUbiActual());
-            cont2.getChildren().add(lb);
+            Label lb4 = new Label(vehi.getCiud());
+            cont2.getChildren().add(lb4);
             cont.getChildren().add(cont2);
             contenedor.getChildren().add(cont);
             ctrl++;
@@ -116,31 +123,27 @@ public class CatalogoController implements Initializable {
         this.llenarContenedores(lFiltrada);
         
     }
-/*
+
     @FXML
     private void filterOrder(ActionEvent event) {
         Comparator<Vehiculo> porAnio = (Vehiculo b1, Vehiculo b2)->{
             return Integer.compare(b1.getAnio(), b2.getAnio());
          };
+        /*
         Comparator<Vehiculo> porPrecio = (Vehiculo b1, Vehiculo b2)->{
             return Double.compare(b1.getPrecio(),b2.getPrecio());
          };
+        */
         LinkedList<Vehiculo> lFiltrada = App.listaVehiculos;        
         if (CbxVehiculo.getSelectionModel().getSelectedItem()!=null){
             lFiltrada = this.soloUnTipo();
         }
-<<<<<<< HEAD
-    } */
-=======
         String atrib = CbxVehiculo.getSelectionModel().getSelectedItem();
-        if(atrib.equals("precio")){
-            ordenarLista(lFiltrada,porPrecio);
-        }else{
-            ordenarLista(lFiltrada,porAnio);
-        }
+        
+        ordenarLista(lFiltrada,porAnio);
+        
         this.llenarContenedores(lFiltrada);
     }
->>>>>>> 50d62da2a23f25dff6aff945182c86a2ef6365ce
 
     @FXML
     public static void ordenarLista(LinkedList<Vehiculo> lista, Comparator<Vehiculo> comparador) {
@@ -156,6 +159,23 @@ public class CatalogoController implements Initializable {
             }
         }
     }
+    
+    private void cargarVehiculos() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(App.pathFiles+"vehiculos.txt"));
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                Vehiculo vehi = Vehiculo.Texto(linea);
+                App.listaVehiculos.addLast(vehi);
+            }
+            System.out.println(Catalogo.getlVehiculos());
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo de vehiculos");
+            e.printStackTrace();
+        }
+    }
+    
     
     
 }
