@@ -13,8 +13,13 @@ import java.util.Objects;
  *
  * @author vecto
  */
+<<<<<<< HEAD
 public class Vehiculo {
     private String ciud;
+=======
+public class Vehiculo implements Comparable<Vehiculo>{
+    
+>>>>>>> 50d62da2a23f25dff6aff945182c86a2ef6365ce
     private String placa;
     private String marca;
     private String modelo;
@@ -173,12 +178,22 @@ public class Vehiculo {
         final Vehiculo other = (Vehiculo) obj;
         return Objects.equals(this.placa, other.placa);
     }
+<<<<<<< HEAD
     public void guardarEnArchivo(String rutaArchivo) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo, true));
         writer.write(toString());
         writer.newLine();
         writer.close();
     }
+=======
+
+    @Override
+    public int compareTo(Vehiculo o) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    
+>>>>>>> 50d62da2a23f25dff6aff945182c86a2ef6365ce
     
     @Override
     public String toString() {

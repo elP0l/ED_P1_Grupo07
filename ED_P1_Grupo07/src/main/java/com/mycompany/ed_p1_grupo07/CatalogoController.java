@@ -11,6 +11,7 @@ import Clases.Vehiculo;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.ResourceBundle;
@@ -48,10 +49,11 @@ public class CatalogoController implements Initializable {
         // TODO
         CbxVehiculo.getItems().addAll("auto","moto","camion","maquinaria");
         CbxOrder.getItems().addAll("precio","año");
+        
     }    
     
     @FXML
-    private LinkedList<Vehiculo> filterVehiculo(ActionEvent event) {
+    private LinkedList<Vehiculo> soloUnTipo(){
         LinkedList<Vehiculo> lFiltrada = new LinkedList<>();
         NodeList<Vehiculo> node;
         TipoVehi tpV = TipoVehi.valueOf(CbxVehiculo.getSelectionModel().getSelectedItem());
@@ -60,8 +62,12 @@ public class CatalogoController implements Initializable {
                lFiltrada.addLast(node.getContent());
            }            
         }
-        
-        Iterator<Vehiculo> it = lFiltrada.iterator();
+        return lFiltrada;
+    }
+            
+    @FXML
+    public void llenarContenedores(LinkedList<Vehiculo> lV){
+        Iterator<Vehiculo> it = lV.iterator();
         int ctrl = 0;
         HBox cont = new HBox();
         while (it.hasNext()){
@@ -100,22 +106,56 @@ public class CatalogoController implements Initializable {
                 ctrl=0;
             }
         }
-        return lFiltrada;
+    }
+    
+    @FXML
+    private void filterVehiculo(ActionEvent event) {
+
+        LinkedList<Vehiculo> lFiltrada = this.soloUnTipo();
+        
+        this.llenarContenedores(lFiltrada);
+        
     }
 /*
     @FXML
     private void filterOrder(ActionEvent event) {
         Comparator<Vehiculo> porAnio = (Vehiculo b1, Vehiculo b2)->{
-            if(b1.getAnio()-b2.getAnio()==0){
-                return b1.getPrecio().compareTo(b2.getPrecio());
-            }
-            return b1.getAnio()-b2.getAnio();
-        };
-        
-        LinkedList<Vehiculo> lVehis = new LinkedList<>();
+            return Integer.compare(b1.getAnio(), b2.getAnio());
+         };
+        Comparator<Vehiculo> porPrecio = (Vehiculo b1, Vehiculo b2)->{
+            return Double.compare(b1.getPrecio(),b2.getPrecio());
+         };
+        LinkedList<Vehiculo> lFiltrada = App.listaVehiculos;        
         if (CbxVehiculo.getSelectionModel().getSelectedItem()!=null){
-            
+            lFiltrada = this.soloUnTipo();
         }
+<<<<<<< HEAD
     } */
+=======
+        String atrib = CbxVehiculo.getSelectionModel().getSelectedItem();
+        if(atrib.equals("precio")){
+            ordenarLista(lFiltrada,porPrecio);
+        }else{
+            ordenarLista(lFiltrada,porAnio);
+        }
+        this.llenarContenedores(lFiltrada);
+    }
+>>>>>>> 50d62da2a23f25dff6aff945182c86a2ef6365ce
 
+    @FXML
+    public static void ordenarLista(LinkedList<Vehiculo> lista, Comparator<Vehiculo> comparador) {
+        int n = lista.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (comparador.compare(lista.get(j), lista.get(j + 1)) > 0) {
+                    // Intercambiar elementos
+                    Vehiculo temp = lista.get(j);
+                    lista.set(j, lista.get(j + 1));
+                    lista.set(j + 1, temp);
+                }
+            }
+        }
+    }
+    
+    
 }
