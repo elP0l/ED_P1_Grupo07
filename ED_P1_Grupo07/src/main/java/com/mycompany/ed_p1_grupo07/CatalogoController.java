@@ -39,6 +39,8 @@ import javafx.scene.layout.HBox;
 public class CatalogoController implements Initializable {
     
     @FXML
+    private VBox contenedorcito = new VBox();
+    @FXML
     private VBox contenedor;
     @FXML
     private ComboBox<String> CbxVehiculo;
@@ -54,14 +56,15 @@ public class CatalogoController implements Initializable {
         CbxVehiculo.getItems().addAll("AUTOS","MOTOS","CAMIONES","MAQUINARIAS");
         CbxOrder.getItems().addAll("AÑO");
         cargarVehiculos();
+        contenedor.getChildren().add(contenedorcito);
     }    
     
     @FXML
-    private LinkedList<Vehiculo> soloUnTipo(){
+    private LinkedList<Vehiculo> soloUnTipo(LinkedList<Vehiculo> listita){
         LinkedList<Vehiculo> lFiltrada = new LinkedList<>();
         NodeList<Vehiculo> node;
         TipoVehi tpV = TipoVehi.valueOf(CbxVehiculo.getSelectionModel().getSelectedItem());
-        for (node = App.listaVehiculos.getHeader() ; node!=null ;node = node.getNext()){
+        for (node = listita.getHeader() ; node!=null ;node = node.getNext()){
            if(node.getContent().getTipoVehi()==tpV){
                lFiltrada.addLast(node.getContent());
            }            
@@ -71,7 +74,8 @@ public class CatalogoController implements Initializable {
     
     @FXML
     public void llenarContenedores(LinkedList<Vehiculo> lV) {
-        
+        contenedorcito.getChildren().clear();
+        contenedorcito.setSpacing(25);
         Iterator<Vehiculo> it = lV.iterator();
         System.out.println(lV);
         int ctrl = 0;
@@ -82,44 +86,51 @@ public class CatalogoController implements Initializable {
         while (it.hasNext()) {
             Vehiculo vehi = it.next();
             VBox cont2 = new VBox();
-            cont2.setSpacing(15);
+            cont2.setSpacing(25);
             cont2.setAlignment(Pos.TOP_LEFT);
+            cont2.setStyle("-fx-border-color: red; -fx-border-width: 2; -fx-padding: 10;");
+            cont2.setMinWidth(200);
+            cont2.setMaxHeight(300);
 
-            Label lb1 = new Label(vehi.getModelo());
+            Label lb1 = new Label("Modelo: "+vehi.getModelo());
             cont2.getChildren().add(lb1);
 
             HBox cont3 = new HBox();
-            cont3.setSpacing(15);
-            cont3.setAlignment(Pos.CENTER);
+            cont3.setSpacing(25);
+            cont3.setAlignment(Pos.TOP_LEFT);
 
-            Label lb2 = new Label(String.valueOf(vehi.getAnio()));
+            Label lb2 = new Label(String.valueOf("Año: "+vehi.getAnio()));
             cont3.getChildren().add(lb2);
 
-            Label lb3 = new Label(String.valueOf(vehi.getKm()));
+            Label lb3 = new Label(String.valueOf("Km: "+vehi.getKm()));
             cont3.getChildren().add(lb3);
 
             cont2.getChildren().add(cont3);
 
-            Label lb4 = new Label(vehi.getCiud());
+            Label lb4 = new Label("Ciudad: "+vehi.getCiud());
             cont2.getChildren().add(lb4);
 
             cont.getChildren().add(cont2);
             ctrl++;
 
             if (ctrl == 3) {
-                contenedor.getChildren().add(cont);
+                contenedorcito.getChildren().add(cont);
                 cont = new HBox(); // Crear un nuevo HBox para el siguiente conjunto de elementos
                 cont.setSpacing(15);
                 cont.setAlignment(Pos.CENTER);
                 ctrl = 0;
             }
         }
+        if (ctrl > 0) {
+            contenedor.getChildren().add(cont);
+        }
+        
     }
     
     @FXML
     private void filterVehiculo(ActionEvent event) {
 
-        LinkedList<Vehiculo> lFiltrada = this.soloUnTipo();
+        LinkedList<Vehiculo> lFiltrada = this.soloUnTipo(App.listaVehiculos);
         
         this.llenarContenedores(lFiltrada);
         
@@ -136,9 +147,10 @@ public class CatalogoController implements Initializable {
             return Double.compare(b1.getPrecio(),b2.getPrecio());
          };
         */
-        LinkedList<Vehiculo> lFiltrada = App.listaVehiculos;        
+        LinkedList<Vehiculo> lFiltrada = new LinkedList<>();
+        lFiltrada.setAll(App.listaVehiculos);        
         if (CbxVehiculo.getSelectionModel().getSelectedItem()!=null){
-            lFiltrada = this.soloUnTipo();
+            lFiltrada = this.soloUnTipo(lFiltrada);
         }
         String atrib = CbxVehiculo.getSelectionModel().getSelectedItem();
         

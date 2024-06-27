@@ -260,4 +260,13 @@ public class LinkedList<E> implements List<E> {
         return re;
      }
     
+    public void setAll(LinkedList<E> newCollection) {
+        header = null; // Vaciar la lista actual
+        // Añadir todos los elementos de la nueva colección
+        NodeList<E> nodo;
+        for (nodo = newCollection.getHeader();nodo!=null;nodo=nodo.getNext()) {
+            addLast(nodo.getContent());
+        }
+    }
+    
 }
