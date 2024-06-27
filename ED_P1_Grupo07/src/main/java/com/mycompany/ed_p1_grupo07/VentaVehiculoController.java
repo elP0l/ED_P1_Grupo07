@@ -78,7 +78,7 @@ public class VentaVehiculoController implements Initializable {
         cbanio.setItems(FXCollections.observableArrayList(anios));
         
         // Llenar ComboBox ubicación
-        List<String> ubicaciones = Arrays.asList("Ciudad de México", "Guadalajara", "Monterrey", "Puebla", "Tijuana");
+        List<String> ubicaciones = Arrays.asList("Ecuador");
         cbubicacion.setItems(FXCollections.observableArrayList(ubicaciones));
         
         // Llenar ComboBox subtipo
@@ -86,11 +86,11 @@ public class VentaVehiculoController implements Initializable {
         cbsubtipo.setItems(FXCollections.observableArrayList(subtipos));
         
         // Llenar ComboBox kilometraje
-        List<String> kms = Arrays.asList("Km", "Miles");
+        List<String> kms = Arrays.asList("Km", "Millas");
         cbkm.setItems(FXCollections.observableArrayList(kms));
         
         // Llenar ComboBox ciudad
-        List<String> ciudades = Arrays.asList("Ciudad de México", "Guadalajara", "Monterrey", "Puebla", "Tijuana");
+        List<String> ciudades = Arrays.asList("Guayaquil", "Cuenca", "Quito", "Ambato", "Manta");
         cbciudad.setItems(FXCollections.observableArrayList(ciudades));
         
         // Agregar listener para cbmarca que llene cbmodelo basado en la marca seleccionada
