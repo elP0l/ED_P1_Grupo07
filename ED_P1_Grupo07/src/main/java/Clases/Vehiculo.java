@@ -10,7 +10,7 @@ import java.util.Objects;
  *
  * @author vecto
  */
-public class Vehiculo {
+public class Vehiculo implements Comparable<Vehiculo>{
     
     private String placa;
     private String marca;
@@ -171,6 +171,13 @@ public class Vehiculo {
         final Vehiculo other = (Vehiculo) obj;
         return Objects.equals(this.placa, other.placa);
     }
+
+    @Override
+    public int compareTo(Vehiculo o) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    
     
     
     

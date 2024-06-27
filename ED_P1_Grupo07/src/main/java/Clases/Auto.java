@@ -8,18 +8,19 @@ package Clases;
  *
  * @author vecto
  */
-public class Auto extends Vehiculo {
+public class Auto {
     
     private String color;
     private final int numRuedas = 4;
     private TipoAuto tipoAuto;
     
+    /*
     public Auto(String placa, String marca, String modelo, int anio, String ubiActual, String color, TipoAuto tipo) {
         super(placa, marca, modelo, anio, ubiActual);
         this.color = color;
         this.tipoAuto = tipo;
     }
-
+    
     public String getColor() {
         return color;
     }
@@ -51,7 +52,7 @@ public class Auto extends Vehiculo {
     public void setlServicios(LinkedList<Servicio> lServicios) {
         this.lServicios = lServicios;
     }
-    
+    */
     
     
     

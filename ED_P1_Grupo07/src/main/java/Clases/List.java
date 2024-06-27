@@ -11,7 +11,7 @@ import java.util.Iterator;
  *
  * @author José Marin
  */
-public interface List<E> {
+public interface List<E>{
     public E removeLast();
     public E removeFirst();
     public boolean addFirst(E e); 
