@@ -68,49 +68,50 @@ public class CatalogoController implements Initializable {
         }
         return lFiltrada;
     }
-            
+    
     @FXML
-    public void llenarContenedores(LinkedList<Vehiculo> lV){
+    public void llenarContenedores(LinkedList<Vehiculo> lV) {
+        
         Iterator<Vehiculo> it = lV.iterator();
         System.out.println(lV);
         int ctrl = 0;
-        HBox cont = new HBox();
-        while (it.hasNext()){
-            cont.setSpacing(15);
-            cont.setAlignment(Pos.CENTER);
+        HBox cont = new HBox(); // Mover la declaración de cont dentro del while
+        cont.setSpacing(15);
+        cont.setAlignment(Pos.CENTER);
+
+        while (it.hasNext()) {
             Vehiculo vehi = it.next();
             VBox cont2 = new VBox();
             cont2.setSpacing(15);
             cont2.setAlignment(Pos.TOP_LEFT);
-            /*
-            ImageView imgVehi = new ImageView();
-            try(FileInputStream input = new FileInputStream(App.pathImages+vehi.getlImagenes().get(0))){
-                Image imgv = new Image(input);            
-                imgVehi.setImage(imgv);
-            }catch (IOException ex) {            
-            }
-            cont2.getChildren().add(imgVehi);
-            */
+
             Label lb1 = new Label(vehi.getModelo());
             cont2.getChildren().add(lb1);
+
             HBox cont3 = new HBox();
             cont3.setSpacing(15);
             cont3.setAlignment(Pos.CENTER);
-            //lb = new Label(String.valueOf(vehi.getPrecio()));
-            //cont3.getChildren().add(lb);
+
             Label lb2 = new Label(String.valueOf(vehi.getAnio()));
             cont3.getChildren().add(lb2);
+
             Label lb3 = new Label(String.valueOf(vehi.getKm()));
             cont3.getChildren().add(lb3);
+
             cont2.getChildren().add(cont3);
+
             Label lb4 = new Label(vehi.getCiud());
             cont2.getChildren().add(lb4);
+
             cont.getChildren().add(cont2);
-            contenedor.getChildren().add(cont);
             ctrl++;
-            if (ctrl==3){
-                cont = new HBox();
-                ctrl=0;
+
+            if (ctrl == 3) {
+                contenedor.getChildren().add(cont);
+                cont = new HBox(); // Crear un nuevo HBox para el siguiente conjunto de elementos
+                cont.setSpacing(15);
+                cont.setAlignment(Pos.CENTER);
+                ctrl = 0;
             }
         }
     }
@@ -126,6 +127,7 @@ public class CatalogoController implements Initializable {
 
     @FXML
     private void filterOrder(ActionEvent event) {
+        
         Comparator<Vehiculo> porAnio = (Vehiculo b1, Vehiculo b2)->{
             return Integer.compare(b1.getAnio(), b2.getAnio());
          };
