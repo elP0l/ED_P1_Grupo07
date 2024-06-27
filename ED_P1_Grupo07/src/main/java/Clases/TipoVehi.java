@@ -6,8 +6,8 @@ package Clases;
 
 /**
  *
- * @author José Marin
+ * @author vecto
  */
 public enum TipoVehi {
-    auto,moto,camion,maquinaria;
+    AUTOS,MOTOCICLETAS,CAMIONETAS,CAMIONES;
 }

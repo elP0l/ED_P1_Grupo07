@@ -68,31 +68,24 @@ public class VentaVehiculoController implements Initializable {
         // Llenar ComboBox tipo
         List<String> tipos = Arrays.asList("Autos", "Motocicletas", "Camionetas", "Camiones");
         cbtipo.setItems(FXCollections.observableArrayList(tipos));
-        
         // Llenar ComboBox marca
         List<String> marcas = Arrays.asList("Toyota", "Honda", "Ford", "Chevrolet", "Nissan");
         cbmarca.setItems(FXCollections.observableArrayList(marcas));
-        
         // Llenar ComboBox año
         List<String> anios = Arrays.asList("2020", "2019", "2018", "2017", "2016");
         cbanio.setItems(FXCollections.observableArrayList(anios));
-        
         // Llenar ComboBox ubicación
         List<String> ubicaciones = Arrays.asList("Ecuador");
         cbubicacion.setItems(FXCollections.observableArrayList(ubicaciones));
-        
         // Llenar ComboBox subtipo
         List<String> subtipos = Arrays.asList("Sedan", "SUV", "Pick-up", "Hatchback", "Convertible");
         cbsubtipo.setItems(FXCollections.observableArrayList(subtipos));
-        
         // Llenar ComboBox kilometraje
         List<String> kms = Arrays.asList("Km", "Millas");
         cbkm.setItems(FXCollections.observableArrayList(kms));
-        
         // Llenar ComboBox ciudad
         List<String> ciudades = Arrays.asList("Guayaquil", "Cuenca", "Quito", "Ambato", "Manta");
         cbciudad.setItems(FXCollections.observableArrayList(ciudades));
-        
         // Agregar listener para cbmarca que llene cbmodelo basado en la marca seleccionada
         cbmarca.setOnAction(event -> {
             String selectedMarca = cbmarca.getSelectionModel().getSelectedItem();
@@ -100,15 +93,20 @@ public class VentaVehiculoController implements Initializable {
                 fillModelos(selectedMarca);
             }
         });
-        
-        boton.setOnAction(event -> handleButtonClick());
+        boton.setOnAction(event -> {
+            try {
+                handleButtonClick();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
         botonAtras.setOnAction(event -> {
             try {
                 App.setRoot("inicio");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-    });
+        });
     }
 
     private void fillModelos(String marca) {
@@ -137,7 +135,7 @@ public class VentaVehiculoController implements Initializable {
         cbmodelo.setItems(FXCollections.observableArrayList(modelos));
     }
     
-    private void handleButtonClick() {
+    private void handleButtonClick() throws IOException {
         // Verificar que todos los ComboBox tengan una opción seleccionada
         if (cbtipo.getValue() == null || cbmodelo.getValue() == null || cbanio.getValue() == null ||
             cbubicacion.getValue() == null || cbmarca.getValue() == null || cbsubtipo.getValue() == null ||
@@ -152,16 +150,18 @@ public class VentaVehiculoController implements Initializable {
             String tipo = cbtipo.getValue();
             String marca = cbmarca.getValue();
             String modelo = cbmodelo.getValue();
+            String subtipo= cbsubtipo.getValue();
             int anio = Integer.parseInt(cbanio.getValue());
+            int km = Integer.parseInt(tfkm.getText());
             String ubicacion = cbubicacion.getValue();
             TipoVehi tipoVehi = TipoVehi.valueOf(tipo.toUpperCase());
-            int km = Integer.parseInt(tfkm.getText());
+            String ciu = cbciudad.getValue();
             
-            Vehiculo vehiculo = new Vehiculo("placaX", marca, modelo, anio, ubicacion, tipoVehi);
+            Vehiculo vehiculo = new Vehiculo(ubicacion,ciu,marca,modelo,anio,tipoVehi,subtipo);
             vehiculo.setKm(km);
             vehiculo.setUbiActual(ubicacion);
             vehiculo.setPrecio(10000.00); // Asignar precio de ejemplo
-            
+            vehiculo.guardarEnArchivo(App.pathFiles+"vehiculos.txt");
             // Mostrar un mensaje de éxito
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Éxito");
@@ -169,5 +169,12 @@ public class VentaVehiculoController implements Initializable {
             alert.setContentText("Se ha creado un nuevo vehículo exitosamente.");
             alert.showAndWait();
         }
+        
     }
-}
+    @FXML
+    private void registrar(ActionEvent event) throws IOException {
+         handleButtonClick();
+    }
+    }
+
+    

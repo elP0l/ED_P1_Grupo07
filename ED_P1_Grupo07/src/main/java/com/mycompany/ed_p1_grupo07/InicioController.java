@@ -54,12 +54,12 @@ public class InicioController implements Initializable {
     
     @FXML
     private void verCatalogo()throws IOException {
-        App.setRoot("catalogoVehiculo");    
+        App.setRoot("catalogo");    
     }
     
     @FXML
     private void venderVehiculo() throws IOException {
-        App.setRoot("ventaVehiculo");
+        App.setRoot("VentaVehiculo");
     }
     
 }

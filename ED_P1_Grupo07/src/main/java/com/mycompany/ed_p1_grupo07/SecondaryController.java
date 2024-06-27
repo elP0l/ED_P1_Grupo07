@@ -77,7 +77,7 @@ public class SecondaryController {
         String edad = ed2.getText();
         Usuario nuevoUsuario = new Usuario(correo, contra, nombre, apellido, edad);
         try {
-            nuevoUsuario.guardarEnArchivo("usuarios.txt");
+            nuevoUsuario.guardarEnArchivo(App.pathFiles+"usuarios.txt");
             System.out.println("Usuario registrado correctamente");
               switchToPrimary();
         } catch (IOException e) {

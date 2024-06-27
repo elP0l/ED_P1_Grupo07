@@ -127,7 +127,7 @@
                         <Insets bottom="5.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <Button fx:id="boton" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: red;" text="Continuar" textFill="#fffafa">
+                  <Button fx:id="boton" mnemonicParsing="false" onAction="#registrar" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: red;" text="Continuar" textFill="#fffafa">
                      <VBox.margin>
                         <Insets left="130.0" top="10.0" />
                      </VBox.margin>

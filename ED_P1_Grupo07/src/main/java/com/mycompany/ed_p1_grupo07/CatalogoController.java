@@ -102,7 +102,7 @@ public class CatalogoController implements Initializable {
         }
         return lFiltrada;
     }
-
+/*
     @FXML
     private void filterOrder(ActionEvent event) {
         Comparator<Vehiculo> porAnio = (Vehiculo b1, Vehiculo b2)->{
@@ -116,6 +116,6 @@ public class CatalogoController implements Initializable {
         if (CbxVehiculo.getSelectionModel().getSelectedItem()!=null){
             
         }
-    }
+    } */
 
 }

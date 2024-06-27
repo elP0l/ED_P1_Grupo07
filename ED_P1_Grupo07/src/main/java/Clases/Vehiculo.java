@@ -4,6 +4,9 @@
  */
 package Clases;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -11,7 +14,7 @@ import java.util.Objects;
  * @author vecto
  */
 public class Vehiculo {
-    
+    private String ciud;
     private String placa;
     private String marca;
     private String modelo;
@@ -22,20 +25,23 @@ public class Vehiculo {
     private int km;
     private TipoVehi tipoVehi;
     private String color;
+    private String Subtipo;
     private int numLlantas;
     LinkedList<Accidente> lAccidentes = new LinkedList<>();
     LinkedList<Servicio> lServicios = new LinkedList<>();
     DoublyCircularLinkedList<String> lImagenes = new DoublyCircularLinkedList<>();
 
-    public Vehiculo(String placa, String marca, String modelo, int anio, String ubiActual, TipoVehi tipoVehi) {
-        this.placa = placa;
+    public Vehiculo( String ubiActual,String ciud, String marca, String modelo, int anio, TipoVehi tipoVehi, String Subtipo) {
+        this.ciud = ciud;
         this.marca = marca;
         this.modelo = modelo;
         this.anio = anio;
         this.ubiActual = ubiActual;
         this.tipoVehi = tipoVehi;
+        this.Subtipo = Subtipo;
     }
 
+    
     public String getPlaca() {
         return placa;
     }
@@ -137,26 +143,22 @@ public class Vehiculo {
         this.numLlantas = numLlantas;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.placa);
-        hash = 29 * hash + Objects.hashCode(this.marca);
-        hash = 29 * hash + Objects.hashCode(this.modelo);
-        hash = 29 * hash + this.anio;
-        hash = 29 * hash + (int) (Double.doubleToLongBits(this.peso) ^ (Double.doubleToLongBits(this.peso) >>> 32));
-        hash = 29 * hash + Objects.hashCode(this.ubiActual);
-        hash = 29 * hash + (int) (Double.doubleToLongBits(this.precio) ^ (Double.doubleToLongBits(this.precio) >>> 32));
-        hash = 29 * hash + this.km;
-        hash = 29 * hash + Objects.hashCode(this.tipoVehi);
-        hash = 29 * hash + Objects.hashCode(this.color);
-        hash = 29 * hash + this.numLlantas;
-        hash = 29 * hash + Objects.hashCode(this.lAccidentes);
-        hash = 29 * hash + Objects.hashCode(this.lServicios);
-        hash = 29 * hash + Objects.hashCode(this.lImagenes);
-        return hash;
+    public String getSubtipo() {
+        return Subtipo;
     }
 
+    public void setSubtipo(String Subtipo) {
+        this.Subtipo = Subtipo;
+    }
+
+    public String getCiud() {
+        return ciud;
+    }
+
+    public void setCiud(String ciud) {
+        this.ciud = ciud;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -171,7 +173,20 @@ public class Vehiculo {
         final Vehiculo other = (Vehiculo) obj;
         return Objects.equals(this.placa, other.placa);
     }
+    public void guardarEnArchivo(String rutaArchivo) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo, true));
+        writer.write(toString());
+        writer.newLine();
+        writer.close();
+    }
     
-    
-    
+    @Override
+    public String toString() {
+        
+        return tipoVehi+","+ marca + "," + modelo + "," +Subtipo+"," +anio + "," + peso + "," +km+ "," +ubiActual+ "," +ciud;  }
 }
+
+    
+    
+    
+
