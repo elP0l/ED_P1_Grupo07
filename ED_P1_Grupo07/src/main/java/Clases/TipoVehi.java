@@ -9,5 +9,5 @@ package Clases;
  * @author vecto
  */
 public enum TipoVehi {
-    AUTOS,MOTOS,CAMIONETAS,CAMIONES;
+    AUTOS,MOTOS,CAMIONETAS,MAQUINARIAS;
 }

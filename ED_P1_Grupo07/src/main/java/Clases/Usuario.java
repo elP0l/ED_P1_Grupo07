@@ -19,6 +19,7 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String edad;
+    private LinkedList<Vehiculo> vehiPref = new LinkedList<>();
 
     public Usuario(String correo, String contra, String nombre, String apellido, String edad) {
         this.correo = correo;
@@ -73,9 +74,15 @@ public class Usuario {
     public void setEdad(String edad) {
         this.edad = edad;
     }
+
+    public LinkedList<Vehiculo> getVehiPref() {
+        return vehiPref;
+    }    
+    
     public boolean validarCorreo(String correo, String contra) {
         return this.correo.equals(correo) && this.contra.equals(contra);
     }
+    
     public static Usuario Texto(String linea) {
         String[] partes = linea.split(","); 
         if (partes.length >= 5) { 

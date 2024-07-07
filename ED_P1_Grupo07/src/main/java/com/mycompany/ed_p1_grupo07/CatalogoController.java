@@ -6,6 +6,7 @@ package com.mycompany.ed_p1_grupo07;
 
 import Clases.Catalogo;
 import Clases.LinkedList;
+import Clases.DoublyLinkedList;
 import Clases.NodeList;
 import Clases.TipoVehi;
 import Clases.Usuario;
@@ -23,15 +24,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 
 /**
  * FXML Controller class
@@ -41,13 +41,16 @@ import javafx.scene.layout.Priority;
 public class CatalogoController implements Initializable {
     
     @FXML
-    private VBox contenedorcito = new VBox();
+    private VBox c = new VBox();
     @FXML
     private VBox contenedor;
     @FXML
     private ComboBox<String> CbxVehiculo;
     @FXML
     private ComboBox<String> CbxOrder;
+    @FXML
+    public static DoublyLinkedList<Vehiculo> vehis = new DoublyLinkedList<>();
+    
     /**
      * Initializes the controller class.
      */
@@ -78,7 +81,11 @@ public class CatalogoController implements Initializable {
     
     @FXML
     public void llenarContenedores(LinkedList<Vehiculo> lV) {
-
+                
+        c.getChildren().clear();
+        
+        VBox contenedorcito = new VBox();
+        contenedorcito.setSpacing(15);
         Iterator<Vehiculo> it = lV.iterator();
         
         int ctrl = 0;
@@ -92,7 +99,7 @@ public class CatalogoController implements Initializable {
             System.out.println(img);
             ImageView previa = new ImageView();
             try(FileInputStream input = new FileInputStream(App.pathImagesXVehis+'/'+img)){
-                Image imgv = new Image(input);            
+                Image imgv = new Image(input);
                 previa.setImage(imgv);
                 //previa.setPreserveRatio(true);
                 previa.setFitWidth(150);
@@ -145,29 +152,23 @@ public class CatalogoController implements Initializable {
         
         ScrollPane scrll = new ScrollPane(contenedorcito);
         scrll.setFitToWidth(true);
-        contenedor.getChildren().add(scrll);
+        c.getChildren().add(scrll);
         //VBox.setVgrow(scrll, Priority.ALWAYS);
         
     }
     
     @FXML
     private void filterVehiculo(ActionEvent event) {
-
-        contenedorcito.getChildren().clear();
-        contenedorcito.setSpacing(25);
-        
+        CatalogoController.vehis.clear();
         LinkedList<Vehiculo> lFiltrada = this.soloUnTipo(App.listaVehiculos);
-        
+        CatalogoController.vehis.setAll(lFiltrada);
         this.llenarContenedores(lFiltrada);
         
     }
 
     @FXML
     private void filterOrder(ActionEvent event) {
-        
-        contenedorcito.getChildren().clear();
-        contenedorcito.setSpacing(25);
-        
+        CatalogoController.vehis.clear();
         Comparator<Vehiculo> porAnio = (Vehiculo b1, Vehiculo b2)->{
             return Integer.compare(b1.getAnio(), b2.getAnio());
          };
@@ -177,9 +178,6 @@ public class CatalogoController implements Initializable {
          };
         */
         
-        contenedorcito.getChildren().clear();
-        contenedorcito.setSpacing(25);
-        
         LinkedList<Vehiculo> lFiltrada = new LinkedList<>();
         lFiltrada.setAll(App.listaVehiculos);        
         if (CbxVehiculo.getSelectionModel().getSelectedItem()!=null){
@@ -188,7 +186,7 @@ public class CatalogoController implements Initializable {
         String atrib = CbxVehiculo.getSelectionModel().getSelectedItem();
         
         ordenarLista(lFiltrada,porAnio);
-        
+        CatalogoController.vehis.setAll(lFiltrada);
         this.llenarContenedores(lFiltrada);
     }
 
@@ -207,7 +205,9 @@ public class CatalogoController implements Initializable {
         }
     }
     
+    @FXML
     private void cargarVehiculos() {
+        App.listaVehiculos.clear();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(App.pathFiles+"vehiculos.txt"));
             String linea;
@@ -223,4 +223,16 @@ public class CatalogoController implements Initializable {
         }
     }    
     
+    @FXML
+    private void atras() throws IOException{
+        App.setRoot("inicio");
+    }
+    
+    @FXML
+    private void verDetalle()throws IOException{
+        if(CatalogoController.vehis.size()==0){
+            CatalogoController.vehis.setAll(App.listaVehiculos);
+        }
+        App.setRoot("vehiculos");
+    }
 }

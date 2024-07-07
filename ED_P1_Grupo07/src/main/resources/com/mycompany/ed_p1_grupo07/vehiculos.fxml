@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.mycompany.ed_p1_grupo07.VehiculosController">
+   <children>
+      <HBox prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="369.0" spacing="10.0" style="-fx-border-color: black;">
+               <children>
+                  <HBox prefHeight="57.0" prefWidth="368.0">
+                     <children>
+                        <Label fx:id="nameModelo" prefHeight="27.0" prefWidth="294.0" text="Modelo">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#antVehi" style="-fx-background-color: red;" text="&lt;" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#sgtVehi" style="-fx-background-color: red;" text="&gt;" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="15.0" top="15.0" />
+                     </padding>
+                  </HBox>
+                  <ImageView fx:id="imgVehis" fitHeight="216.0" fitWidth="369.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                  <HBox alignment="TOP_RIGHT" prefHeight="35.0" prefWidth="370.0">
+                     <children>
+                        <Label prefHeight="27.0" prefWidth="294.0">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#antImg" style="-fx-background-color: red;" text="&lt;" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#sgtImg" style="-fx-background-color: red;" text="&gt;" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets right="15.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label alignment="CENTER" text="Año" />
+                              <Label fx:id="anio" alignment="CENTER" layoutX="10.0" layoutY="10.0" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" layoutX="145.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label alignment="CENTER" text="Ciudad" />
+                              <Label fx:id="ciudad" alignment="CENTER" layoutX="10.0" layoutY="10.0" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" layoutX="195.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label alignment="CENTER" text="Recorrido" />
+                              <Label fx:id="recorrido" alignment="CENTER" layoutX="10.0" layoutY="10.0" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" layoutX="45.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label alignment="CENTER" text="Precio" />
+                              <Label fx:id="precio" alignment="CENTER" layoutX="10.0" layoutY="10.0" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="400.0" prefWidth="233.0" spacing="15.0" style="-fx-border-color: black;">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="177.0" style="-fx-border-color: black;" text="  Opciones adicionales" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <ImageView fitHeight="35.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/editar.png" />
+                           </image>
+                        </ImageView>
+                        <Button mnemonicParsing="false" onAction="#editarVehi" prefHeight="22.0" prefWidth="110.0" style="-fx-background-color: red; -fx-wrap-text: true;" text="Editar vehículo" textAlignment="CENTER" textFill="WHITE" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets bottom="5.0" top="5.0" />
+                     </opaqueInsets>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="11.0" layoutY="222.0" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <ImageView fitHeight="37.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/remover.png" />
+                           </image>
+                        </ImageView>
+                        <Button mnemonicParsing="false" onAction="#removerVehi" style="-fx-background-color: red;" text="Remover vehículo" textFill="WHITE" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets bottom="5.0" top="5.0" />
+                     </opaqueInsets>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="11.0" layoutY="259.0" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <ImageView fitHeight="35.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/agregar.png" />
+                           </image>
+                        </ImageView>
+                        <Button mnemonicParsing="false" onAction="#agregarVehi" style="-fx-background-color: red;" text="Agregar favoritos" textFill="WHITE" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets bottom="5.0" top="5.0" />
+                     </opaqueInsets>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="11.0" layoutY="296.0" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <ImageView fitHeight="35.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/volverIni.png" />
+                           </image>
+                        </ImageView>
+                        <Button mnemonicParsing="false" onAction="#volverIni" prefHeight="26.0" prefWidth="109.0" style="-fx-background-color: red;" text="Volver a inicio" textFill="WHITE" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets bottom="5.0" top="5.0" />
+                     </opaqueInsets>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets top="15.0" />
+               </opaqueInsets>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

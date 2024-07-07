@@ -51,7 +51,8 @@ public class PrimaryController implements Initializable {
     private TextField usu2;
     @FXML
     private PasswordField con2;
-    private Usuario u;
+    @FXML
+    public static Usuario u;
     @FXML
     private BorderPane pane;
     @FXML

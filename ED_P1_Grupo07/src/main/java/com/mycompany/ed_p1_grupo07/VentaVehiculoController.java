@@ -66,7 +66,7 @@ public class VentaVehiculoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Llenar ComboBox tipo
-        List<String> tipos = Arrays.asList("Autos", "Motocicletas", "Camionetas", "Camiones");
+        List<String> tipos = Arrays.asList("Autos", "Motos", "Camionetas", "Maquinarias");
         cbtipo.setItems(FXCollections.observableArrayList(tipos));
         // Llenar ComboBox marca
         List<String> marcas = Arrays.asList("Toyota", "Honda", "Ford", "Chevrolet", "Nissan");
