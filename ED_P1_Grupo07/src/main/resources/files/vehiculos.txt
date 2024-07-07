@@ -6,3 +6,4 @@ AUTOS,Toyota,Camry,Sedan,2018,34000,Ecuador,Manta,15000.0
 AUTOS,Nissan,Sentra,Sedan,2016,300,Ecuador,Guayaquil,24000.0
 AUTOS,Honda,Accord,SUV,2019,23,Ecuador,Guayaquil,12000.0
 AUTOS,Honda,Civic,Sedan,2018,41000,Ecuador,Manta,12000.0
+

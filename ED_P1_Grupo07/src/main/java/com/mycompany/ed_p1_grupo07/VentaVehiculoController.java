@@ -212,7 +212,7 @@ public class VentaVehiculoController implements Initializable {
     private void subirImagen(ActionEvent event) {
         int imagre = 0;
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpeg", "*.jpg"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imágenes", "*.png"));
         List<File> imagenesElegidas = fileChooser.showOpenMultipleDialog(boton.getScene().getWindow());
         if (imagenesElegidas != null && !imagenesElegidas.isEmpty()) {
             for (File imagenElegida : imagenesElegidas) {
