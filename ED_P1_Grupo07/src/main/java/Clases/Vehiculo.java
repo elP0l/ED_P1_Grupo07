@@ -50,7 +50,7 @@ public class Vehiculo implements Comparable<Vehiculo>{
         this.ubiActual = ubiActual;
         this.tipoVehi = tipoVehi;
         this.Subtipo = Subtipo;
-        this.precio=precio;
+        this.precio = precio;
     }
 
     
@@ -209,7 +209,7 @@ public class Vehiculo implements Comparable<Vehiculo>{
     @Override
     public String toString() {
         
-        return tipoVehi+","+ marca + "," + modelo + "," +Subtipo+"," +anio + "," +km+ "," +ubiActual+ "," +ciud;  }
+        return tipoVehi+","+ marca + "," + modelo + "," +Subtipo+"," +anio + "," +km+ "," +ubiActual+ "," +ciud+","+precio;  }
     
     public static Vehiculo Texto(String linea) {
         String[] partes = linea.split(","); 

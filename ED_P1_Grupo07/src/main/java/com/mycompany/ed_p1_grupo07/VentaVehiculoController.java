@@ -186,7 +186,6 @@ public class VentaVehiculoController implements Initializable {
             Vehiculo vehiculo = new Vehiculo(ubicacion,ciu,marca,modelo,anio,tipoVehi,subtipo,prec);
             vehiculo.setKm(km);
             vehiculo.setUbiActual(ubicacion);
-            vehiculo.setPrecio(prec); 
             String nombreCarpeta = tipo.toUpperCase() + "," + marca + "," + modelo + "," + subtipo + "," + anio + "," + km + "," + ubicacion + "," + ciu + "," + prec;
             Path carpetaVehiculo = Paths.get("src/main/resources/imagesXVehis/" + nombreCarpeta);
             Files.createDirectories(carpetaVehiculo);
