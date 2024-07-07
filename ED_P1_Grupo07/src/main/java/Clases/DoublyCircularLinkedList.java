@@ -4,6 +4,10 @@
  */
 package Clases;
 
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.Iterator;
 
@@ -14,6 +18,10 @@ import java.util.Iterator;
 public class DoublyCircularLinkedList<E> implements List<E> {
     
     private DoublyCircularNodeList<E> last;
+
+    public DoublyCircularNodeList<E> getLast() {
+        return last;
+    }
     
     public E get(int index){
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -46,7 +54,31 @@ public class DoublyCircularLinkedList<E> implements List<E> {
 
     @Override
     public boolean addLast(E e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(e!=null){
+            DoublyCircularNodeList<E> newNode = new DoublyCircularNodeList<>(e);
+            if(last!=null){
+//                if(last==last.getNext()){
+//                    newNode.setNext(last.getNext());
+//                    newNode.setPrevious(last);
+//                    last.setNext(newNode);
+//                    last.setPrevious(newNode);
+//                    
+//                }else{
+                newNode.setNext(last.getNext());
+                last.getNext().setPrevious(newNode);
+                newNode.setPrevious(last);
+                last.setNext(newNode);
+                last = newNode;
+                //}
+            }else{
+                newNode.setNext(newNode);
+                newNode.setPrevious(newNode);
+                last = newNode;
+            }
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
@@ -88,4 +120,29 @@ public class DoublyCircularLinkedList<E> implements List<E> {
     public E remove(int index) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    public void readAllPngFiles(Path dirPath,String ext) throws IOException {
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dirPath, "*.png")) {
+            for (Path entry : stream) {
+                addLast((E) (ext+"/"+entry.getFileName().toString()));
+            }
+        }
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        DoublyCircularNodeList<E> current = last.getNext();
+        sb.append(current.getContent()).append(",");
+        while (current != last) {
+            sb.append(current.getNext().getContent()).append(",");
+            current = current.getNext();
+        }
+        // Eliminar la última coma si hay elementos en la lista
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        return sb.toString();
+    }
+    
 }

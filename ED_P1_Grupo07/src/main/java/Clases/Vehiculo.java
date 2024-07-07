@@ -4,9 +4,18 @@
  */
 package Clases;
 
+import com.mycompany.ed_p1_grupo07.App;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Objects;
 
 /**
@@ -160,6 +169,14 @@ public class Vehiculo implements Comparable<Vehiculo>{
     public void setCiud(String ciud) {
         this.ciud = ciud;
     }
+
+    public void setlAccidentes(LinkedList<Accidente> lAccidentes) {
+        this.lAccidentes = lAccidentes;
+    }
+
+    public void setlServicios(LinkedList<Servicio> lServicios) {
+        this.lServicios = lServicios;
+    }
     
     @Override
     public boolean equals(Object obj) {
@@ -204,7 +221,51 @@ public class Vehiculo implements Comparable<Vehiculo>{
         String ubiAct = partes[6];
         String ciud = partes[7];
 
-        return new Vehiculo(ubiAct, ciud, marca, modelo, anio,tpv, subtipo);       
+        Vehiculo v = new Vehiculo(ubiAct, ciud, marca, modelo, anio,tpv, subtipo);
+        v.setKm(km);
+        v.cargarImagenes(linea);
+        return v;       
+        
+    }
+    
+    public void cargarImagenes(String lineVehi){
+        
+//        try {
+//            Files.walkFileTree(Paths.get(App.pathImagesXVehis), new SimpleFileVisitor<Path>() {
+//                @Override
+//                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+//                    if (file.getFileName().toString().equals(lineVehi)) {
+//                        System.out.println("Archivo encontrado: " + file.toAbsolutePath());
+//                        try {
+//                            LinkedList<String> lines = (LinkedList<String>) Files.readAllLines(file);
+//                            for (String line : lines) {
+//                                if (line.endsWith(".png")) {
+//                                    lImagenes.addLast(lineVehi+"/"+line);
+//                                }
+//                            }
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        return FileVisitResult.TERMINATE;
+//                    }
+//                    return FileVisitResult.CONTINUE;
+//                }
+//                @Override
+//                public FileVisitResult visitFileFailed(Path file, IOException exc) {
+//                    return FileVisitResult.CONTINUE;
+//                }
+//            });
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }        
+
+        try {
+            lImagenes.readAllPngFiles(Paths.get(App.pathImagesXVehis+"/"+lineVehi),lineVehi);
+            System.out.println("Nombres de archivos PNG en el directorio:");
+            System.out.println(lImagenes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         
     }
     

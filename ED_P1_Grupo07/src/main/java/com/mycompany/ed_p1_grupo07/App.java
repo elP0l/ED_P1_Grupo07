@@ -19,6 +19,7 @@ public class App extends Application {
     private static Scene scene;
     public static String pathFiles = "src/main/resources/files/";
     public static String pathImages = "src/main/resources/images/";
+    public static String pathImagesXVehis = "src/main/resources/imagesXVehis/";
 
     //Recursos datos del sistema
     public static LinkedList<Vehiculo> listaVehiculos = Catalogo.getlVehiculos();

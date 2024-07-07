@@ -4,6 +4,9 @@
  */
 package Clases;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.Iterator;
 
@@ -267,6 +270,10 @@ public class LinkedList<E> implements List<E> {
         for (nodo = newCollection.getHeader();nodo!=null;nodo=nodo.getNext()) {
             addLast(nodo.getContent());
         }
+    }
+    
+    public void readAllLines(Path path) throws IOException {
+        Files.lines(path).forEach(line -> addLast((E) line));
     }
     
 }

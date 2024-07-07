@@ -27,9 +27,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 /**
  * FXML Controller class
@@ -56,7 +58,9 @@ public class CatalogoController implements Initializable {
         CbxVehiculo.getItems().addAll("AUTOS","MOTOS","CAMIONES","MAQUINARIAS");
         CbxOrder.getItems().addAll("AÑO");
         cargarVehiculos();
-        contenedor.getChildren().add(contenedorcito);
+        //contenedor.getChildren().add(contenedorcito);
+        contenedor.setSpacing(10);
+        contenedor.setAlignment(Pos.TOP_CENTER);
     }    
     
     @FXML
@@ -74,30 +78,43 @@ public class CatalogoController implements Initializable {
     
     @FXML
     public void llenarContenedores(LinkedList<Vehiculo> lV) {
-        contenedorcito.getChildren().clear();
-        contenedorcito.setSpacing(25);
+
         Iterator<Vehiculo> it = lV.iterator();
-        System.out.println(lV);
+        
         int ctrl = 0;
-        HBox cont = new HBox(); // Mover la declaración de cont dentro del while
+        HBox cont = new HBox();
         cont.setSpacing(15);
         cont.setAlignment(Pos.CENTER);
-
+        
         while (it.hasNext()) {
             Vehiculo vehi = it.next();
+            String img = vehi.getlImagenes().getLast().getNext().getContent();
+            System.out.println(img);
+            ImageView previa = new ImageView();
+            try(FileInputStream input = new FileInputStream(App.pathImagesXVehis+'/'+img)){
+                Image imgv = new Image(input);            
+                previa.setImage(imgv);
+                //previa.setPreserveRatio(true);
+                previa.setFitWidth(150);
+                previa.setFitHeight(75);
+            }catch (IOException ex) {         
+            }
+            
             VBox cont2 = new VBox();
             cont2.setSpacing(25);
-            cont2.setAlignment(Pos.TOP_LEFT);
+            cont2.setAlignment(Pos.TOP_CENTER);
             cont2.setStyle("-fx-border-color: red; -fx-border-width: 2; -fx-padding: 10;");
-            cont2.setMinWidth(200);
-            cont2.setMaxHeight(300);
+            cont2.setMinWidth(175);
+            cont2.setMaxHeight(200);
+            
+            cont2.getChildren().add(previa);
 
             Label lb1 = new Label("Modelo: "+vehi.getModelo());
             cont2.getChildren().add(lb1);
 
             HBox cont3 = new HBox();
             cont3.setSpacing(25);
-            cont3.setAlignment(Pos.TOP_LEFT);
+            cont3.setAlignment(Pos.TOP_CENTER);
 
             Label lb2 = new Label(String.valueOf("Año: "+vehi.getAnio()));
             cont3.getChildren().add(lb2);
@@ -115,6 +132,7 @@ public class CatalogoController implements Initializable {
 
             if (ctrl == 3) {
                 contenedorcito.getChildren().add(cont);
+
                 cont = new HBox(); // Crear un nuevo HBox para el siguiente conjunto de elementos
                 cont.setSpacing(15);
                 cont.setAlignment(Pos.CENTER);
@@ -122,14 +140,22 @@ public class CatalogoController implements Initializable {
             }
         }
         if (ctrl > 0) {
-            contenedor.getChildren().add(cont);
+            contenedorcito.getChildren().add(cont);
         }
+        
+        ScrollPane scrll = new ScrollPane(contenedorcito);
+        scrll.setFitToWidth(true);
+        contenedor.getChildren().add(scrll);
+        //VBox.setVgrow(scrll, Priority.ALWAYS);
         
     }
     
     @FXML
     private void filterVehiculo(ActionEvent event) {
 
+        contenedorcito.getChildren().clear();
+        contenedorcito.setSpacing(25);
+        
         LinkedList<Vehiculo> lFiltrada = this.soloUnTipo(App.listaVehiculos);
         
         this.llenarContenedores(lFiltrada);
@@ -139,6 +165,9 @@ public class CatalogoController implements Initializable {
     @FXML
     private void filterOrder(ActionEvent event) {
         
+        contenedorcito.getChildren().clear();
+        contenedorcito.setSpacing(25);
+        
         Comparator<Vehiculo> porAnio = (Vehiculo b1, Vehiculo b2)->{
             return Integer.compare(b1.getAnio(), b2.getAnio());
          };
@@ -147,6 +176,10 @@ public class CatalogoController implements Initializable {
             return Double.compare(b1.getPrecio(),b2.getPrecio());
          };
         */
+        
+        contenedorcito.getChildren().clear();
+        contenedorcito.setSpacing(25);
+        
         LinkedList<Vehiculo> lFiltrada = new LinkedList<>();
         lFiltrada.setAll(App.listaVehiculos);        
         if (CbxVehiculo.getSelectionModel().getSelectedItem()!=null){
@@ -188,8 +221,6 @@ public class CatalogoController implements Initializable {
             System.out.println("Error al leer el archivo de vehiculos");
             e.printStackTrace();
         }
-    }
-    
-    
+    }    
     
 }
