@@ -42,7 +42,7 @@ public class Vehiculo implements Comparable<Vehiculo>{
     LinkedList<Servicio> lServicios = new LinkedList<>();
     DoublyCircularLinkedList<String> lImagenes = new DoublyCircularLinkedList<>();
 
-    public Vehiculo( String ubiActual,String ciud, String marca, String modelo, int anio, TipoVehi tipoVehi, String Subtipo) {
+    public Vehiculo( String ubiActual,String ciud, String marca, String modelo, int anio, TipoVehi tipoVehi, String Subtipo, double precio) {
         this.ciud = ciud;
         this.marca = marca;
         this.modelo = modelo;
@@ -50,6 +50,7 @@ public class Vehiculo implements Comparable<Vehiculo>{
         this.ubiActual = ubiActual;
         this.tipoVehi = tipoVehi;
         this.Subtipo = Subtipo;
+        this.precio=precio;
     }
 
     
@@ -220,8 +221,8 @@ public class Vehiculo implements Comparable<Vehiculo>{
         Integer km = Integer.valueOf(partes[5]);
         String ubiAct = partes[6];
         String ciud = partes[7];
-
-        Vehiculo v = new Vehiculo(ubiAct, ciud, marca, modelo, anio,tpv, subtipo);
+        double pre=Double.parseDouble(partes[8]);
+        Vehiculo v = new Vehiculo(ubiAct, ciud, marca, modelo, anio,tpv, subtipo,pre);
         v.setKm(km);
         v.cargarImagenes(linea);
         return v;       
