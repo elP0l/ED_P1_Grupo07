@@ -3,3 +3,5 @@ AUTOS,Honda,Civic,Sedan,2019,12000,Ecuador,Guayaquil
 AUTOS,Honda,CR-V,SUV,2017,100000,Ecuador,Guayaquil
 AUTOS,Chevrolet,Equinox,SUV,2017,39000,Ecuador,Guayaquil
 AUTOS,Toyota,Camry,Sedan,2018,34000,Ecuador,Manta
+AUTOS,Nissan,Sentra,Pick-up,2016,300,Ecuador,Guayaquil
+AUTOS,Honda,Accord,SUV,2019,23,Ecuador,Guayaquil

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.ed_p1_grupo07.VentaVehiculoController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.ed_p1_grupo07.VentaVehiculoController">
    <children>
       <HBox prefHeight="350.0" prefWidth="500.0">
          <children>
@@ -64,20 +64,32 @@
                         <Insets bottom="5.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <Button fx:id="botonAtras" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: red;" text="Atras" textFill="#fffafa">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Button>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="botonAtras" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: red;" text="Atras" textFill="#fffafa">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="imagen" mnemonicParsing="false" onAction="#subirImagen" prefHeight="30.0" prefWidth="105.0" style="-fx-background-color: red;" text="Subir Imagen" textFill="#fffafa">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="40.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
                <padding>
                   <Insets left="20.0" top="30.0" />
                </padding>
             </VBox>
-            <VBox prefHeight="600.0" prefWidth="250.0">
+            <VBox prefHeight="336.0" prefWidth="250.0">
                <children>
                   <Label text="Marca">
                      <VBox.margin>
@@ -141,5 +153,19 @@
             </VBox>
          </children>
       </HBox>
+      <VBox layoutX="482.0" prefHeight="129.0" prefWidth="220.0">
+         <children>
+            <Label text="Precio">
+               <VBox.margin>
+                  <Insets top="60.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="precio" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="122.0">
+               <VBox.margin>
+                  <Insets left="1.0" top="10.0" />
+               </VBox.margin></TextField>
+         </children>
+      </VBox>
+      <VBox fx:id="imgContainer" layoutX="482.0" layoutY="118.0" prefHeight="230.0" prefWidth="220.0" />
    </children>
 </Pane>

@@ -9,8 +9,10 @@ package com.mycompany.ed_p1_grupo07;
  *
  * @author fabri
  */
+import Clases.LinkedList;
 import Clases.Vehiculo;
 import Clases.TipoVehi;
+import java.io.File;
 import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -21,10 +23,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
 public class VentaVehiculoController implements Initializable {
 
@@ -60,6 +71,15 @@ public class VentaVehiculoController implements Initializable {
     
     @FXML
     private Button botonAtras;
+    @FXML
+    private Button imagen;
+    
+    private File imagenElegida;
+    @FXML
+    private TextField precio;
+    @FXML
+    private VBox imgContainer;
+    private LinkedList<String> lImagenes = new LinkedList<>();
     
  
     
@@ -106,7 +126,8 @@ public class VentaVehiculoController implements Initializable {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        });
+         });
+        imagen.setOnAction(this::subirImagen);
     }
 
     private void fillModelos(String marca) {
@@ -136,14 +157,19 @@ public class VentaVehiculoController implements Initializable {
     }
     
     private void handleButtonClick() throws IOException {
-        // Verificar que todos los ComboBox tengan una opción seleccionada
         if (cbtipo.getValue() == null || cbmodelo.getValue() == null || cbanio.getValue() == null ||
             cbubicacion.getValue() == null || cbmarca.getValue() == null || cbsubtipo.getValue() == null ||
-            cbkm.getValue() == null || cbciudad.getValue() == null || tfkm.getText().isEmpty()) {
+            cbkm.getValue() == null || cbciudad.getValue() == null || tfkm.getText().isEmpty() ||precio.getText().isEmpty()) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Campos incompletos");
             alert.setContentText("Por favor, completa todos los campos antes de continuar.");
+            alert.showAndWait();
+        } else if (lImagenes.isEmpty()) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Imágenes no subidas");
+            alert.setContentText("Por favor, sube al menos una imagen antes de continuar.");
             alert.showAndWait();
         } else {
             // Crear objeto Vehiculo
@@ -156,25 +182,68 @@ public class VentaVehiculoController implements Initializable {
             String ubicacion = cbubicacion.getValue();
             TipoVehi tipoVehi = TipoVehi.valueOf(tipo.toUpperCase());
             String ciu = cbciudad.getValue();
-            
-            Vehiculo vehiculo = new Vehiculo(ubicacion,ciu,marca,modelo,anio,tipoVehi,subtipo);
+            double prec=Double.parseDouble(precio.getText());
+            Vehiculo vehiculo = new Vehiculo(ubicacion,ciu,marca,modelo,anio,tipoVehi,subtipo,prec);
             vehiculo.setKm(km);
             vehiculo.setUbiActual(ubicacion);
-            vehiculo.setPrecio(10000.00); // Asignar precio de ejemplo
-            vehiculo.guardarEnArchivo(App.pathFiles+"vehiculos.txt");
-            // Mostrar un mensaje de éxito
+            vehiculo.setPrecio(prec); 
+            String nombreCarpeta = tipo.toUpperCase() + "," + marca + "," + modelo + "," + subtipo + "," + anio + "," + km + "," + ubicacion + "," + ciu + "," + prec;
+            Path carpetaVehiculo = Paths.get("src/main/resources/imagesXVehis/" + nombreCarpeta);
+            Files.createDirectories(carpetaVehiculo);
+            for (String imagenNombre : lImagenes) {
+                Path origen = Paths.get("src/main/resources/imagesXVehis/" + imagenNombre);
+                Path destino = Paths.get(carpetaVehiculo.toString() + "/" + imagenNombre);
+                Files.move(origen, destino, StandardCopyOption.REPLACE_EXISTING);
+            }
+            vehiculo.guardarEnArchivo(App.pathFiles + "vehiculos.txt");
+      
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Éxito");
             alert.setHeaderText("Vehículo creado");
             alert.setContentText("Se ha creado un nuevo vehículo exitosamente.");
             alert.showAndWait();
         }
-        
     }
     @FXML
     private void registrar(ActionEvent event) throws IOException {
          handleButtonClick();
     }
+
+    @FXML
+    private void subirImagen(ActionEvent event) {
+        int imagre = 0;
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpeg", "*.jpg"));
+        List<File> imagenesElegidas = fileChooser.showOpenMultipleDialog(boton.getScene().getWindow());
+        if (imagenesElegidas != null && !imagenesElegidas.isEmpty()) {
+            for (File imagenElegida : imagenesElegidas) {
+                try {
+                    File destino = new File(App.pathImagesXVehis + "/" + imagenElegida.getName());
+                    Files.copy(imagenElegida.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    lImagenes.addLast(destino.getName());
+                    Image imagen = new Image(imagenElegida.toURI().toString());
+                    ImageView imageView = new ImageView(imagen);
+                    imageView.setFitWidth(100); 
+                    imageView.setFitHeight(100);
+                    imageView.setPreserveRatio(true);
+                    imageView.setSmooth(true);
+                    imageView.setCache(true);
+                    VBox.setMargin(imageView, new Insets(10));
+                    imgContainer.getChildren().add(imageView); 
+                    imagre++;
+                }catch (IOException e) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Error al subir imagen");
+                    alert.setContentText("No se pudo subir la imagen: " + e.getMessage());
+                    alert.showAndWait();
+                }
+                
+           }
+        }
     }
+}
+
+
 
     
