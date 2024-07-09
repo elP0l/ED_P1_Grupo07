@@ -39,7 +39,6 @@ public class InicioController implements Initializable {
         try(FileInputStream input = new FileInputStream(App.pathImages+"portada.jpg")){
             Image imgv = new Image(input);            
             imgPortada.setImage(imgv);
-            //imgBienvenida.setPreserveRatio(true);
             imgPortada.setFitWidth(320);
             imgPortada.setFitHeight(550);
         }catch (IOException ex) {            
@@ -47,7 +46,6 @@ public class InicioController implements Initializable {
         try(FileInputStream input = new FileInputStream(App.pathImages+"banderaEc.png")){
             Image imgv = new Image(input);            
             imgBand.setImage(imgv);
-            //imgBienvenida.setPreserveRatio(true);
         }catch (IOException ex) {            
         }
     }    
