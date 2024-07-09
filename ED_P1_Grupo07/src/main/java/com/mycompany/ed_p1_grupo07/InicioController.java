@@ -60,4 +60,14 @@ public class InicioController implements Initializable {
         App.setRoot("VentaVehiculo");
     }
     
+    @FXML
+    private void verFavs() throws IOException {
+        App.setRoot("favoritos");
+    }
+    
+    @FXML
+    private void cerrarSesion() throws IOException {
+        App.setRoot("primary");
+    }
+    
 }
