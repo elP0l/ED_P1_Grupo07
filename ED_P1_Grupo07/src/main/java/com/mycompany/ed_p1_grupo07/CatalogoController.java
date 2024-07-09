@@ -29,6 +29,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -40,6 +41,8 @@ import javafx.scene.layout.HBox;
  */
 public class CatalogoController implements Initializable {
     
+    @FXML
+    private HBox contFilter;
     @FXML
     private VBox c = new VBox();
     @FXML
@@ -58,12 +61,13 @@ public class CatalogoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        CbxVehiculo.getItems().addAll("AUTOS","MOTOS","CAMIONES","MAQUINARIAS");
-        CbxOrder.getItems().addAll("AÑO");
-        cargarVehiculos();
-        //contenedor.getChildren().add(contenedorcito);
+        CbxVehiculo.getItems().addAll("AUTOS","MOTOS","CAMIONETAS","MAQUINARIAS");
+        CbxOrder.getItems().addAll("AÑO","PRECIO","KILOMETRAJE","MARCA");
         contenedor.setSpacing(10);
         contenedor.setAlignment(Pos.TOP_CENTER);
+        llenarContenedores(App.listaVehiculos);
+        cargarVehiculos();
+        
     }    
     
     @FXML
@@ -81,7 +85,6 @@ public class CatalogoController implements Initializable {
     
     @FXML
     public void llenarContenedores(LinkedList<Vehiculo> lV) {
-                
         c.getChildren().clear();
         
         VBox contenedorcito = new VBox();
@@ -96,12 +99,11 @@ public class CatalogoController implements Initializable {
         while (it.hasNext()) {
             Vehiculo vehi = it.next();
             String img = vehi.getlImagenes().getLast().getNext().getContent();
-            System.out.println(img);
+            //System.out.println(img);
             ImageView previa = new ImageView();
             try(FileInputStream input = new FileInputStream(App.pathImagesXVehis+'/'+img)){
                 Image imgv = new Image(input);
                 previa.setImage(imgv);
-                //previa.setPreserveRatio(true);
                 previa.setFitWidth(150);
                 previa.setFitHeight(75);
             }catch (IOException ex) {         
@@ -116,7 +118,7 @@ public class CatalogoController implements Initializable {
             
             cont2.getChildren().add(previa);
 
-            Label lb1 = new Label("Modelo: "+vehi.getModelo());
+            Label lb1 = new Label("Modelo: "+vehi.getMarca().toUpperCase()+" "+vehi.getModelo().toUpperCase());
             cont2.getChildren().add(lb1);
 
             HBox cont3 = new HBox();
@@ -131,8 +133,11 @@ public class CatalogoController implements Initializable {
 
             cont2.getChildren().add(cont3);
 
-            Label lb4 = new Label("Ciudad: "+vehi.getCiud());
+            Label lb4 = new Label("Ciudad: "+vehi.getCiud().toUpperCase());
             cont2.getChildren().add(lb4);
+            
+            Label lb5 = new Label("Precio: "+vehi.getPrecio());
+            cont2.getChildren().add(lb5);
 
             cont.getChildren().add(cont2);
             ctrl++;
@@ -153,8 +158,6 @@ public class CatalogoController implements Initializable {
         ScrollPane scrll = new ScrollPane(contenedorcito);
         scrll.setFitToWidth(true);
         c.getChildren().add(scrll);
-        //VBox.setVgrow(scrll, Priority.ALWAYS);
-        
     }
     
     @FXML
@@ -167,16 +170,23 @@ public class CatalogoController implements Initializable {
     }
 
     @FXML
-    private void filterOrder(ActionEvent event) {
+    private void filterOrder(ActionEvent event) throws IOException {
         CatalogoController.vehis.clear();
         Comparator<Vehiculo> porAnio = (Vehiculo b1, Vehiculo b2)->{
             return Integer.compare(b1.getAnio(), b2.getAnio());
          };
-        /*
+        
         Comparator<Vehiculo> porPrecio = (Vehiculo b1, Vehiculo b2)->{
             return Double.compare(b1.getPrecio(),b2.getPrecio());
          };
-        */
+        
+        Comparator<Vehiculo> porKm = (Vehiculo b1, Vehiculo b2)->{
+            return Integer.compare(b1.getKm(), b2.getKm());
+        };
+        
+        Comparator<Vehiculo> porMarca = (Vehiculo b1, Vehiculo b2)->{
+            return b1.getMarca().compareTo(b2.getMarca());
+        };
         
         LinkedList<Vehiculo> lFiltrada = new LinkedList<>();
         lFiltrada.setAll(App.listaVehiculos);        
@@ -185,7 +195,28 @@ public class CatalogoController implements Initializable {
         }
         String atrib = CbxVehiculo.getSelectionModel().getSelectedItem();
         
-        ordenarLista(lFiltrada,porAnio);
+        if(CbxOrder.getSelectionModel().getSelectedItem().equals("AÑO")){
+            ordenarLista(lFiltrada,porAnio);            
+            VentanaRangoController.aspect = "ANIO";
+            VentanaRangoController.lXFilt = lFiltrada;
+            App.setRoot("VentanaRango");
+            
+        }else if(CbxOrder.getSelectionModel().getSelectedItem().equals("PRECIO")){
+            ordenarLista(lFiltrada,porPrecio);
+            VentanaRangoController.aspect = "PRECIO";
+            VentanaRangoController.lXFilt = lFiltrada;
+            App.setRoot("VentanaRango");
+
+        }else if(CbxOrder.getSelectionModel().getSelectedItem().equals("KILOMETRAJE")){
+            ordenarLista(lFiltrada,porKm);
+            VentanaRangoController.aspect = "KILOMETRAJE";
+            VentanaRangoController.lXFilt = lFiltrada;
+            App.setRoot("VentanaRango");
+            
+        }else if(CbxOrder.getSelectionModel().getSelectedItem().equals("MARCA")){
+            ordenarLista(lFiltrada,porMarca);
+        }
+
         CatalogoController.vehis.setAll(lFiltrada);
         this.llenarContenedores(lFiltrada);
     }
@@ -215,7 +246,7 @@ public class CatalogoController implements Initializable {
                 Vehiculo vehi = Vehiculo.Texto(linea);
                 App.listaVehiculos.addLast(vehi);
             }
-            System.out.println(Catalogo.getlVehiculos());
+            //System.out.println(Catalogo.getlVehiculos());
             reader.close();
         } catch (IOException e) {
             System.out.println("Error al leer el archivo de vehiculos");
