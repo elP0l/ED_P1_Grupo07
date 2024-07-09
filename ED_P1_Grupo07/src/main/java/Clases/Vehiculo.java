@@ -5,17 +5,11 @@
 package Clases;
 
 import com.mycompany.ed_p1_grupo07.App;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Objects;
 
 /**
@@ -269,6 +263,8 @@ public class Vehiculo implements Comparable<Vehiculo>{
         }
         
     }
+    
+    
     
     
 }

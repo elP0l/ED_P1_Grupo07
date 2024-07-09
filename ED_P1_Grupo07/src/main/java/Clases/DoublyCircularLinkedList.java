@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  *
@@ -86,11 +87,58 @@ public class DoublyCircularLinkedList<E> implements List<E> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public Iterator<E> iterator() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+     @Override
+     public Iterator<E> iterator() {
+         return new Iterator<E>() {
+            private DoublyCircularNodeList<E> current = last != null ? last.getNext() : null;
+            private DoublyCircularNodeList<E> lastReturned = null;
+            private boolean firstIteration = true;
 
+            @Override
+            public boolean hasNext() {
+                return current != null && (firstIteration || current != last.getNext());
+            }
+
+            @Override
+            public E next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException("No more elements in the list");
+                }
+                E element = current.getContent();
+                lastReturned = current;
+                current = current.getNext();
+                firstIteration = false;
+                return element;
+            }
+
+            @Override
+            public void remove() {
+                if (lastReturned == null) {
+                    throw new IllegalStateException("remove() can only be called once after next()");
+                }
+                // Adjust the pointers to remove lastReturned from the list
+                DoublyCircularNodeList<E> previous = lastReturned.getPrevious();
+                DoublyCircularNodeList<E> next = lastReturned.getNext();
+
+                previous.setNext(next);
+                next.setPrevious(previous);
+
+                // Adjust last if lastReturned was the last element
+                if (lastReturned == last) {
+                    last = previous;
+                }
+
+                // Clean up lastReturned
+                lastReturned.setNext(null);
+                lastReturned.setPrevious(null);
+                lastReturned = null;
+            }
+        };
+    }
+     public void setLast(DoublyCircularNodeList<E> last) {
+        this.last = last;
+    }
+     
     @Override
     public boolean isEmpty() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -98,7 +146,18 @@ public class DoublyCircularLinkedList<E> implements List<E> {
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (!isEmpty()) {
+            DoublyCircularNodeList<E> current = last.getNext();
+            while (current != last) {
+                DoublyCircularNodeList<E> nextNode = current.getNext();
+                current.setNext(null);
+                current.setPrevious(null);
+                current = nextNode;
+            }
+            last.setNext(null);
+            last.setPrevious(null);
+            last = null;
+        }
     }
 
     @Override
@@ -113,11 +172,6 @@ public class DoublyCircularLinkedList<E> implements List<E> {
 
     @Override
     public List<E> findAll(Comparator<E> comp, E element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public E remove(int index) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
@@ -144,5 +198,13 @@ public class DoublyCircularLinkedList<E> implements List<E> {
         }
         return sb.toString();
     }
-    
+
+    @Override
+    public E remove(int index) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+   
 }
+    
+    
+

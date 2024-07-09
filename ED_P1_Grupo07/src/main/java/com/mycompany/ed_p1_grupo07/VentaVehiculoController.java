@@ -40,17 +40,12 @@ import javafx.stage.FileChooser;
 public class VentaVehiculoController implements Initializable {
 
     @FXML
-    private ComboBox<String> cbtipo;
-    
-    @FXML
     private ComboBox<String> cbmodelo;
     
     @FXML
     private ComboBox<String> cbanio;
     
-    @FXML
-    private ComboBox<String> cbubicacion;
-    
+ 
     @FXML
     private ComboBox<String> cbmarca;
     
@@ -59,9 +54,7 @@ public class VentaVehiculoController implements Initializable {
     
     @FXML
     private TextField tfkm;
-    
-    @FXML
-    private ComboBox<String> cbkm;
+   
     
     @FXML
     private ComboBox<String> cbciudad;
@@ -85,9 +78,9 @@ public class VentaVehiculoController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+       
         // Llenar ComboBox tipo
-        List<String> tipos = Arrays.asList("Autos", "Motos", "Camionetas", "Maquinarias");
-        cbtipo.setItems(FXCollections.observableArrayList(tipos));
+     
         // Llenar ComboBox marca
         List<String> marcas = Arrays.asList("Toyota", "Honda", "Ford", "Chevrolet", "Nissan");
         cbmarca.setItems(FXCollections.observableArrayList(marcas));
@@ -95,14 +88,10 @@ public class VentaVehiculoController implements Initializable {
         List<String> anios = Arrays.asList("2020", "2019", "2018", "2017", "2016");
         cbanio.setItems(FXCollections.observableArrayList(anios));
         // Llenar ComboBox ubicación
-        List<String> ubicaciones = Arrays.asList("Ecuador");
-        cbubicacion.setItems(FXCollections.observableArrayList(ubicaciones));
         // Llenar ComboBox subtipo
         List<String> subtipos = Arrays.asList("Sedan", "SUV", "Pick-up", "Hatchback", "Convertible");
         cbsubtipo.setItems(FXCollections.observableArrayList(subtipos));
         // Llenar ComboBox kilometraje
-        List<String> kms = Arrays.asList("Km", "Millas");
-        cbkm.setItems(FXCollections.observableArrayList(kms));
         // Llenar ComboBox ciudad
         List<String> ciudades = Arrays.asList("Guayaquil", "Cuenca", "Quito", "Ambato", "Manta");
         cbciudad.setItems(FXCollections.observableArrayList(ciudades));
@@ -157,9 +146,9 @@ public class VentaVehiculoController implements Initializable {
     }
     
     private void handleButtonClick() throws IOException {
-        if (cbtipo.getValue() == null || cbmodelo.getValue() == null || cbanio.getValue() == null ||
-            cbubicacion.getValue() == null || cbmarca.getValue() == null || cbsubtipo.getValue() == null ||
-            cbkm.getValue() == null || cbciudad.getValue() == null || tfkm.getText().isEmpty() ||precio.getText().isEmpty()) {
+        if ( cbmodelo.getValue() == null || cbanio.getValue() == null ||
+             cbmarca.getValue() == null || cbsubtipo.getValue() == null ||
+             cbciudad.getValue() == null || tfkm.getText().isEmpty() ||precio.getText().isEmpty()) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Campos incompletos");
@@ -173,19 +162,17 @@ public class VentaVehiculoController implements Initializable {
             alert.showAndWait();
         } else {
             // Crear objeto Vehiculo
-            String tipo = cbtipo.getValue();
+           
             String marca = cbmarca.getValue();
             String modelo = cbmodelo.getValue();
             String subtipo= cbsubtipo.getValue();
             int anio = Integer.parseInt(cbanio.getValue());
             int km = Integer.parseInt(tfkm.getText());
-            String ubicacion = cbubicacion.getValue();
-            TipoVehi tipoVehi = TipoVehi.valueOf(tipo.toUpperCase());
             String ciu = cbciudad.getValue();
             double prec=Double.parseDouble(precio.getText());
             Vehiculo vehiculo = new Vehiculo(ubicacion,ciu,marca,modelo,anio,tipoVehi,subtipo,prec);
             vehiculo.setKm(km);
-            vehiculo.setUbiActual(ubicacion);
+ 
             String nombreCarpeta = tipo.toUpperCase() + "," + marca + "," + modelo + "," + subtipo + "," + anio + "," + km + "," + ubicacion + "," + ciu + "," + prec;
             Path carpetaVehiculo = Paths.get("src/main/resources/imagesXVehis/" + nombreCarpeta);
             Files.createDirectories(carpetaVehiculo);

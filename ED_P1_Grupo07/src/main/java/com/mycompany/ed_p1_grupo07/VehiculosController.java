@@ -4,20 +4,23 @@
  */
 package com.mycompany.ed_p1_grupo07;
 
-import Clases.DoublyCircularLinkedList;
 import Clases.DoublyCircularNodeList;
 import Clases.DoublyNodeList;
-import Clases.NodeList;
 import Clases.Vehiculo;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -142,12 +145,53 @@ public class VehiculosController implements Initializable {
         PrimaryController.u.getVehiPref().addLast(nV.getContent());
     }
     
-    public void removerVehi(){
-        
+   public void removerVehi() {
+    if (nV != null && nV.getContent() != null) {
+        Vehiculo vehiculoSeleccionado = nV.getContent();
+        // Intentar remover el vehículo de CatalogoController.vehis
+        if (CatalogoController.remove(vehiculoSeleccionado)) {
+            // Mostrar alerta de éxito si se eliminó correctamente
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Éxito");
+            alert.setHeaderText("Vehículo eliminado");
+            alert.setContentText("El vehículo ha sido eliminado correctamente.");
+            alert.showAndWait();
+        } else {
+            // Mostrar alerta de error si no se pudo eliminar
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al eliminar vehículo");
+            alert.setContentText("No se pudo eliminar el vehículo seleccionado.");
+            alert.showAndWait();
+        }
+    } else {
+        // Mostrar alerta de advertencia si no hay vehículo seleccionado
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Advertencia");
+        alert.setHeaderText("Ningún vehículo seleccionado");
+        alert.setContentText("Por favor, selecciona un vehículo antes de eliminarlo.");
+        alert.showAndWait();
     }
-    
-    public void editarVehi(){
-        
-    }
-    
 }
+    
+    public void editarVehi() throws IOException{
+       // Obtener el vehículo seleccionado actualmente
+        Vehiculo vehiculoSeleccionado = nV.getContent();
+
+        // Cargar la vista de edición de vehículo
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("EditarVehiculo.fxml"));
+        Parent root = loader.load();
+        EditarVehiculoController controller = loader.getController();
+
+        // Pasar el vehículo seleccionado al controlador de edición
+        controller.editarVeh(vehiculoSeleccionado);
+
+        // Mostrar la escena de edición de vehículo
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+}
+
