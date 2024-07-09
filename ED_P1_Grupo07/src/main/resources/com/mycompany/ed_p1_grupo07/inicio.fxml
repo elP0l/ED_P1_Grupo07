@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.mycompany.ed_p1_grupo07.InicioController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.ed_p1_grupo07.InicioController">
    <children>
       <HBox layoutX="1.0" layoutY="1.0" prefHeight="400.0" prefWidth="600.0">
          <children>
@@ -32,12 +31,22 @@
                         </ImageView>
                      </children>
                   </AnchorPane>
-                  <Button fx:id="verCat" mnemonicParsing="false" onAction="#verCatalogo" style="-fx-background-color: red;" text="Ver catálogo de vehículos" textFill="WHITE">
+                  <Button fx:id="verCat" mnemonicParsing="false" onAction="#verCatalogo" prefHeight="27.0" prefWidth="230.0" style="-fx-background-color: red;" text="Ver catálogo de vehículos" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="venderVehi" mnemonicParsing="false" onAction="#venderVehiculo" prefHeight="40.0" prefWidth="230.0" style="-fx-background-color: red;" text="Vender vehículo" textFill="WHITE">
+                  <Button fx:id="venderVehi" mnemonicParsing="false" onAction="#venderVehiculo" prefHeight="26.0" prefWidth="230.0" style="-fx-background-color: red;" text="Vender vehículo" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="52.0" layoutY="302.0" mnemonicParsing="false" onAction="#verFavs" prefHeight="40.0" prefWidth="230.0" style="-fx-background-color: red;" text="Ver favoritos" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="52.0" layoutY="332.0" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="28.0" prefWidth="230.0" style="-fx-background-color: red;" text="Cerrar sesión" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -46,6 +55,9 @@
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
+               <padding>
+                  <Insets bottom="25.0" />
+               </padding>
             </VBox>
          </children>
       </HBox>

@@ -2,6 +2,7 @@ package com.mycompany.ed_p1_grupo07;
 
 import Clases.Usuario;
 import java.io.IOException;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -56,11 +57,12 @@ public class SecondaryController {
     @FXML
     private VBox vBox1;
 
-    private void switchToPrimary() throws IOException {
+    @FXML
+    private void atras() throws IOException {
         App.setRoot("primary");
     }
     @FXML
-    public void initialize() {
+    public void initialize(ActionEvent event) {
         try {
             BackgroundFill backgroundFill = new BackgroundFill(Color.BEIGE, null, null);     
             pane1.setBackground(new Background(backgroundFill));
@@ -79,7 +81,7 @@ public class SecondaryController {
         try {
             nuevoUsuario.guardarEnArchivo(App.pathFiles+"usuarios.txt");
             System.out.println("Usuario registrado correctamente");
-              switchToPrimary();
+              atras();
         } catch (IOException e) {
             System.out.println("Error al guardar el usuario en el archivo");
             e.printStackTrace();
