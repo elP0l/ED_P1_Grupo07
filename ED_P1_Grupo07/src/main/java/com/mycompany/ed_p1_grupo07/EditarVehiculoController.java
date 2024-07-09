@@ -7,12 +7,9 @@ package com.mycompany.ed_p1_grupo07;
 
 /**
  *
- * @author fabri
+ * @author vecto
  */
-import Clases.LinkedList;
 import Clases.Vehiculo;
-import Clases.TipoVehi;
-import java.io.File;
 import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -23,23 +20,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 
-public class VentaVehiculoController implements Initializable {
+public class EditarVehiculoController implements Initializable {
 
-    @FXML
+    
+     @FXML
     private ComboBox<String> cbtipo;
     
     @FXML
@@ -72,16 +62,12 @@ public class VentaVehiculoController implements Initializable {
     @FXML
     private Button botonAtras;
     @FXML
-    private Button imagen;
-    
-    private File imagenElegida;
-    @FXML
     private TextField precio;
     @FXML
     private VBox imgContainer;
-    private LinkedList<String> lImagenes = new LinkedList<>();
-    
- 
+
+    private Vehiculo vehiculoActual;
+  
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -114,11 +100,12 @@ public class VentaVehiculoController implements Initializable {
             }
         });
         boton.setOnAction(event -> {
-            try {
-                handleButtonClick();
+            /*try {
+                //handleButtonClick();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+*/
         });
         botonAtras.setOnAction(event -> {
             try {
@@ -127,7 +114,7 @@ public class VentaVehiculoController implements Initializable {
                 ex.printStackTrace();
             }
          });
-        imagen.setOnAction(this::subirImagen);
+ 
     }
 
     private void fillModelos(String marca) {
@@ -156,8 +143,32 @@ public class VentaVehiculoController implements Initializable {
         cbmodelo.setItems(FXCollections.observableArrayList(modelos));
     }
     
+   public void editarVeh(Vehiculo vehiculo) {
+    if (vehiculo != null) {
+        cbmarca.setValue(vehiculo.getMarca());
+        cbmodelo.setValue(vehiculo.getModelo());
+        cbanio.setValue(String.valueOf(vehiculo.getAnio()));
+        precio.setText(String.valueOf(vehiculo.getPrecio()));
+        cbciudad.setValue(vehiculo.getCiud());
+        tfkm.setText(String.valueOf(vehiculo.getKm()));
+    } else {
+        System.out.println("El vehículo proporcionado es nulo");
+    }
+   }
+
+    public void mostrarDatosVehiculo(Vehiculo vehiculo){
+        cbtipo.setValue(String.valueOf(vehiculo.getTipoVehi()));
+        cbsubtipo.setValue(vehiculo.getSubtipo());
+        cbubicacion.setValue(vehiculo.getUbiActual());
+        cbmarca.setValue(vehiculo.getMarca());
+        cbmodelo.setValue(vehiculo.getModelo());
+        cbanio.setValue(String.valueOf(vehiculo.getAnio()));
+        tfkm.setText(String.valueOf(vehiculo.getKm()));
+        cbciudad.setValue(vehiculo.getCiud());
+        precio.setText(String.valueOf(vehiculo.getPrecio()));
+    }
     private void handleButtonClick() throws IOException {
-        if (cbtipo.getValue() == null || cbmodelo.getValue() == null || cbanio.getValue() == null ||
+       if (cbtipo.getValue() == null || cbmodelo.getValue() == null || cbanio.getValue() == null ||
             cbubicacion.getValue() == null || cbmarca.getValue() == null || cbsubtipo.getValue() == null ||
             cbkm.getValue() == null || cbciudad.getValue() == null || tfkm.getText().isEmpty() ||precio.getText().isEmpty()) {
             Alert alert = new Alert(AlertType.ERROR);
@@ -165,84 +176,54 @@ public class VentaVehiculoController implements Initializable {
             alert.setHeaderText("Campos incompletos");
             alert.setContentText("Por favor, completa todos los campos antes de continuar.");
             alert.showAndWait();
-        } else if (lImagenes.isEmpty()) {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Imágenes no subidas");
-            alert.setContentText("Por favor, sube al menos una imagen antes de continuar.");
-            alert.showAndWait();
         } else {
-            // Crear objeto Vehiculo
-            String tipo = cbtipo.getValue();
-            String marca = cbmarca.getValue();
-            String modelo = cbmodelo.getValue();
-            String subtipo= cbsubtipo.getValue();
-            int anio = Integer.parseInt(cbanio.getValue());
-            int km = Integer.parseInt(tfkm.getText());
-            String ubicacion = cbubicacion.getValue();
-            TipoVehi tipoVehi = TipoVehi.valueOf(tipo.toUpperCase());
-            String ciu = cbciudad.getValue();
-            double prec=Double.parseDouble(precio.getText());
-            Vehiculo vehiculo = new Vehiculo(ubicacion,ciu,marca,modelo,anio,tipoVehi,subtipo,prec);
-            vehiculo.setKm(km);
-            vehiculo.setUbiActual(ubicacion);
-            String nombreCarpeta = tipo.toUpperCase() + "," + marca + "," + modelo + "," + subtipo + "," + anio + "," + km + "," + ubicacion + "," + ciu + "," + prec;
-            Path carpetaVehiculo = Paths.get("src/main/resources/imagesXVehis/" + nombreCarpeta);
-            Files.createDirectories(carpetaVehiculo);
-            for (String imagenNombre : lImagenes) {
-                Path origen = Paths.get("src/main/resources/imagesXVehis/" + imagenNombre);
-                Path destino = Paths.get(carpetaVehiculo.toString() + "/" + imagenNombre);
-                Files.move(origen, destino, StandardCopyOption.REPLACE_EXISTING);
-            }
-            vehiculo.guardarEnArchivo(App.pathFiles + "vehiculos.txt");
-      
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Éxito");
-            alert.setHeaderText("Vehículo creado");
-            alert.setContentText("Se ha creado un nuevo vehículo exitosamente.");
-            alert.showAndWait();
+            // Actualizar vehículo con los datos ingresados
+            actualizarVehiculo();
         }
     }
+    public void setVehiculo(Vehiculo vehiculo) {
+      
+        this.vehiculoActual = vehiculo;
+        if (vehiculo != null) {
+            cbtipo.setValue(vehiculo.getTipoVehi().toString());
+            cbmarca.setValue(vehiculo.getMarca());
+            cbmodelo.setValue(vehiculo.getModelo());
+            cbanio.setValue(String.valueOf(vehiculo.getAnio()));
+            cbsubtipo.setValue(vehiculo.getSubtipo());
+            cbubicacion.setValue(vehiculo.getUbiActual());
+            cbciudad.setValue(vehiculo.getCiud());
+            tfkm.setText(String.valueOf(vehiculo.getKm()));
+            precio.setText(String.valueOf(vehiculo.getPrecio()));
+            
+        } else {
+            System.out.println("El vehículo proporcionado es nulo");
+        }
+    }
+   
+    private void actualizarVehiculo() throws IOException {
+        vehiculoActual.setMarca(cbmarca.getValue());
+        vehiculoActual.setModelo(cbmodelo.getValue());
+        vehiculoActual.setAnio(Integer.parseInt(cbanio.getValue()));
+        vehiculoActual.setCiud(cbciudad.getValue());
+        vehiculoActual.setKm(Integer.parseInt(tfkm.getText()));
+        vehiculoActual.setPrecio(Double.parseDouble(precio.getText()));
+
+        // Guardar cambios en archivo
+        vehiculoActual.guardarEnArchivo(App.pathFiles + "vehiculos.txt");
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Éxito");
+        alert.setHeaderText("Vehículo actualizado");
+        alert.setContentText("Los cambios se han guardado exitosamente.");
+        alert.showAndWait();
+    }
+
     @FXML
     private void registrar(ActionEvent event) throws IOException {
-         handleButtonClick();
+         //handleButtonClick();
     }
-
-    @FXML
-    private void subirImagen(ActionEvent event) {
-        int imagre = 0;
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imágenes", "*.png"));
-        List<File> imagenesElegidas = fileChooser.showOpenMultipleDialog(boton.getScene().getWindow());
-        if (imagenesElegidas != null && !imagenesElegidas.isEmpty()) {
-            for (File imagenElegida : imagenesElegidas) {
-                try {
-                    File destino = new File(App.pathImagesXVehis + "/" + imagenElegida.getName());
-                    Files.copy(imagenElegida.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                    lImagenes.addLast(destino.getName());
-                    Image imagen = new Image(imagenElegida.toURI().toString());
-                    ImageView imageView = new ImageView(imagen);
-                    imageView.setFitWidth(100); 
-                    imageView.setFitHeight(100);
-                    imageView.setPreserveRatio(true);
-                    imageView.setSmooth(true);
-                    imageView.setCache(true);
-                    VBox.setMargin(imageView, new Insets(10));
-                    imgContainer.getChildren().add(imageView); 
-                    imagre++;
-                }catch (IOException e) {
-                    Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Error al subir imagen");
-                    alert.setContentText("No se pudo subir la imagen: " + e.getMessage());
-                    alert.showAndWait();
-                }
-                
-           }
-        }
-    }
+   
 }
-
 
 
     

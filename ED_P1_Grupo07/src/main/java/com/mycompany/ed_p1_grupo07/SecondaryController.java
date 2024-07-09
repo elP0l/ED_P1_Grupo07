@@ -2,6 +2,7 @@ package com.mycompany.ed_p1_grupo07;
 
 import Clases.Usuario;
 import java.io.IOException;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -84,5 +85,10 @@ public class SecondaryController {
             System.out.println("Error al guardar el usuario en el archivo");
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void atras(ActionEvent event) throws IOException {
+        App.setRoot("primary");
     }
 }

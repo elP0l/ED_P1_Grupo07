@@ -145,34 +145,8 @@ public class VehiculosController implements Initializable {
         PrimaryController.u.getVehiPref().addLast(nV.getContent());
     }
     
-   public void removerVehi() {
-    if (nV != null && nV.getContent() != null) {
-        Vehiculo vehiculoSeleccionado = nV.getContent();
-        // Intentar remover el vehículo de CatalogoController.vehis
-        if (CatalogoController.remove(vehiculoSeleccionado)) {
-            // Mostrar alerta de éxito si se eliminó correctamente
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Éxito");
-            alert.setHeaderText("Vehículo eliminado");
-            alert.setContentText("El vehículo ha sido eliminado correctamente.");
-            alert.showAndWait();
-        } else {
-            // Mostrar alerta de error si no se pudo eliminar
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al eliminar vehículo");
-            alert.setContentText("No se pudo eliminar el vehículo seleccionado.");
-            alert.showAndWait();
-        }
-    } else {
-        // Mostrar alerta de advertencia si no hay vehículo seleccionado
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Advertencia");
-        alert.setHeaderText("Ningún vehículo seleccionado");
-        alert.setContentText("Por favor, selecciona un vehículo antes de eliminarlo.");
-        alert.showAndWait();
+    public void removerVehi(){
     }
-}
     
     public void editarVehi() throws IOException{
        // Obtener el vehículo seleccionado actualmente
