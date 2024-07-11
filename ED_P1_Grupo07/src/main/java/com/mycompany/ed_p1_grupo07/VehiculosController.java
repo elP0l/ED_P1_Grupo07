@@ -147,7 +147,6 @@ public class VehiculosController implements Initializable {
     
     public void removerVehi(){
     }
-    
     public void editarVehi() throws IOException{
        // Obtener el vehículo seleccionado actualmente
         Vehiculo vehiculoSeleccionado = nV.getContent();
@@ -159,13 +158,14 @@ public class VehiculosController implements Initializable {
         EditarVehiculoController controller = loader.getController();
 
         // Pasar el vehículo seleccionado al controlador de edición
-        controller.editarVeh(vehiculoSeleccionado);
+        controller.mostrarVeh(vehiculoSeleccionado);
 
         // Mostrar la escena de edición de vehículo
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+        
     }
 }
 

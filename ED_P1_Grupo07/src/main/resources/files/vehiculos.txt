@@ -1,5 +1,5 @@
-AUTOS,Toyota,Camry,Sedan,2019,12000,Ecuador,Guayaquil,17000.0
+AUTOS,Toyota,Camry,Sedan,2019,12000,Ecuador,Guayaquil,1700.0
 AUTOS,Honda,Civic,Sedan,2019,12000,Ecuador,Guayaquil,14000.0
-AUTOS,Honda,CR-V,SUV,2017,100000,Ecuador,Guayaquil,34000.0
-AUTOS,Chevrolet,Equinox,SUV,2017,39000,Ecuador,Guayaquil,24000.0
-AUTOS,Toyota,Camry,Sedan,2018,34000,Ecuador,Manta,15000.0
+AUTOS,Honda,CR-V,SUV,2017,100000,Ecuador,Guayaquil,3400.0
+AUTOS,Chevrolet,Equinox,SUV,2017,39000,Ecuador,Guayaquil,2400.0
+AUTOS,Toyota,Camry,Sedan,2018,34000,Ecuador,Manta,1500.0

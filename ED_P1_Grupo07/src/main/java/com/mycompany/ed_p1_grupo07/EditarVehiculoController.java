@@ -9,7 +9,9 @@ package com.mycompany.ed_p1_grupo07;
  *
  * @author vecto
  */
+import Clases.TipoVehi;
 import Clases.Vehiculo;
+import java.io.File;
 import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -65,8 +67,8 @@ public class EditarVehiculoController implements Initializable {
     private TextField precio;
     @FXML
     private VBox imgContainer;
-
     private Vehiculo vehiculoActual;
+    private Vehiculo vehi;
   
     
     @Override
@@ -100,12 +102,12 @@ public class EditarVehiculoController implements Initializable {
             }
         });
         boton.setOnAction(event -> {
-            /*try {
-                //handleButtonClick();
+            try {
+                handleButtonClick();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-*/
+
         });
         botonAtras.setOnAction(event -> {
             try {
@@ -143,29 +145,88 @@ public class EditarVehiculoController implements Initializable {
         cbmodelo.setItems(FXCollections.observableArrayList(modelos));
     }
     
-   public void editarVeh(Vehiculo vehiculo) {
+   public void mostrarVeh(Vehiculo vehiculo) {
     if (vehiculo != null) {
+        cbtipo.setValue(vehiculo.getTipoVehi().toString());
         cbmarca.setValue(vehiculo.getMarca());
+        cbubicacion.setValue(vehiculo.getUbiActual());
+        cbsubtipo.setValue(vehiculo.getSubtipo());
         cbmodelo.setValue(vehiculo.getModelo());
         cbanio.setValue(String.valueOf(vehiculo.getAnio()));
         precio.setText(String.valueOf(vehiculo.getPrecio()));
         cbciudad.setValue(vehiculo.getCiud());
         tfkm.setText(String.valueOf(vehiculo.getKm()));
+        cbkm.setValue("km");
+        this.vehi=vehiculo;
+      
     } else {
         System.out.println("El vehículo proporcionado es nulo");
     }
    }
 
-    public void mostrarDatosVehiculo(Vehiculo vehiculo){
-        cbtipo.setValue(String.valueOf(vehiculo.getTipoVehi()));
-        cbsubtipo.setValue(vehiculo.getSubtipo());
-        cbubicacion.setValue(vehiculo.getUbiActual());
-        cbmarca.setValue(vehiculo.getMarca());
-        cbmodelo.setValue(vehiculo.getModelo());
-        cbanio.setValue(String.valueOf(vehiculo.getAnio()));
-        tfkm.setText(String.valueOf(vehiculo.getKm()));
-        cbciudad.setValue(vehiculo.getCiud());
-        precio.setText(String.valueOf(vehiculo.getPrecio()));
+    public void editarVehiculo() throws IOException{
+        String tipo = cbtipo.getValue();
+        String marca = cbmarca.getValue();
+        String modelo = cbmodelo.getValue();
+        String subtipo= cbsubtipo.getValue();
+        int anio = Integer.parseInt(cbanio.getValue());
+        int km = Integer.parseInt(tfkm.getText());
+        String ubicacion = cbubicacion.getValue();
+        String ciu = cbciudad.getValue();
+        double prec=Double.parseDouble(precio.getText()); 
+        TipoVehi tipoVehi = TipoVehi.valueOf(tipo.toUpperCase());
+        vehiculoActual = new Vehiculo(ubicacion,ciu,marca,modelo,anio,tipoVehi,subtipo,prec);
+        vehiculoActual.setKm(km);
+        Clases.List<Vehiculo> vehi2= Vehiculo.leerDesdeArchivo(App.pathFiles + "vehiculos.txt");
+        boolean encontrado = false;
+        for (Vehiculo vehiculo : vehi2) {
+            if (vehiculo.equals(vehi)) {
+            vehiculo.setMarca(vehiculoActual.getMarca());
+            vehiculo.setModelo(vehiculoActual.getModelo());
+            vehiculo.setSubtipo(vehiculoActual.getSubtipo());
+            vehiculo.setAnio(vehiculoActual.getAnio());
+            vehiculo.setKm(vehiculoActual.getKm());
+            vehiculo.setUbiActual(vehiculoActual.getUbiActual());
+            vehiculo.setCiud(vehiculoActual.getCiud());
+            vehiculo.setPrecio(vehiculoActual.getPrecio());
+            encontrado = true;
+            renombrarCarpetaImagenes(vehi, vehiculoActual);
+            break;
+            }
+        }
+        if (encontrado) {
+            Vehiculo.guardarEnArchivo1(App.pathFiles + "vehiculos.txt",vehi2);
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Éxito");
+            alert.setHeaderText("Vehículo modificado");
+            alert.setContentText("Se ha modificado el vehículo exitosamente.");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Vehículo no encontrado");
+            alert.setContentText("No se encontró el vehículo que intentas modificar.");
+            alert.showAndWait();
+        }
+    }
+    
+    private String construirNombreCarpeta(Vehiculo vehiculo) {
+        return String.join(",",vehiculo.getTipoVehi().toString(),vehiculo.getMarca(),vehiculo.getModelo(),vehiculo.getSubtipo(),String.valueOf(vehiculo.getAnio()),String.valueOf(vehiculo.getKm()),vehiculo.getUbiActual(),vehiculo.getCiud(),String.valueOf(vehiculo.getPrecio()));
+    }
+    public void renombrarCarpetaImagenes(Vehiculo vehiculoAnterior, Vehiculo vehiculoNuevo) {
+        String nombreCarpetaAnterior = construirNombreCarpeta(vehiculoAnterior);
+        String nombreCarpetaNuevo = construirNombreCarpeta(vehiculoNuevo);
+        String pathBase = "src/main/resources/imagesXVehis/";
+        File carpetaAnterior = new File(pathBase + nombreCarpetaAnterior);
+        File carpetaNueva = new File(pathBase + nombreCarpetaNuevo);
+        if (carpetaAnterior.exists()) {
+            boolean renombrado = carpetaAnterior.renameTo(carpetaNueva);
+            if (!renombrado) {
+                System.out.println("Error al renombrar la carpeta de imágenes");
+            }
+        }else {
+            System.out.println("La carpeta anterior no existe");
+        }
     }
     private void handleButtonClick() throws IOException {
        if (cbtipo.getValue() == null || cbmodelo.getValue() == null || cbanio.getValue() == null ||
@@ -178,52 +239,17 @@ public class EditarVehiculoController implements Initializable {
             alert.showAndWait();
         } else {
             // Actualizar vehículo con los datos ingresados
-            actualizarVehiculo();
+            editarVehiculo();
         }
     }
-    public void setVehiculo(Vehiculo vehiculo) {
-      
-        this.vehiculoActual = vehiculo;
-        if (vehiculo != null) {
-            cbtipo.setValue(vehiculo.getTipoVehi().toString());
-            cbmarca.setValue(vehiculo.getMarca());
-            cbmodelo.setValue(vehiculo.getModelo());
-            cbanio.setValue(String.valueOf(vehiculo.getAnio()));
-            cbsubtipo.setValue(vehiculo.getSubtipo());
-            cbubicacion.setValue(vehiculo.getUbiActual());
-            cbciudad.setValue(vehiculo.getCiud());
-            tfkm.setText(String.valueOf(vehiculo.getKm()));
-            precio.setText(String.valueOf(vehiculo.getPrecio()));
-            
-        } else {
-            System.out.println("El vehículo proporcionado es nulo");
-        }
-    }
-   
-    private void actualizarVehiculo() throws IOException {
-        vehiculoActual.setMarca(cbmarca.getValue());
-        vehiculoActual.setModelo(cbmodelo.getValue());
-        vehiculoActual.setAnio(Integer.parseInt(cbanio.getValue()));
-        vehiculoActual.setCiud(cbciudad.getValue());
-        vehiculoActual.setKm(Integer.parseInt(tfkm.getText()));
-        vehiculoActual.setPrecio(Double.parseDouble(precio.getText()));
-
-        // Guardar cambios en archivo
-        vehiculoActual.guardarEnArchivo(App.pathFiles + "vehiculos.txt");
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Éxito");
-        alert.setHeaderText("Vehículo actualizado");
-        alert.setContentText("Los cambios se han guardado exitosamente.");
-        alert.showAndWait();
+    @FXML
+    private void registrar(ActionEvent event) throws IOException {
+         handleButtonClick();
     }
 
     @FXML
-    private void registrar(ActionEvent event) throws IOException {
-         //handleButtonClick();
+    private void atras(ActionEvent event) throws IOException {
+        App.setRoot("vehiculos");
     }
    
 }
-
-
-    
