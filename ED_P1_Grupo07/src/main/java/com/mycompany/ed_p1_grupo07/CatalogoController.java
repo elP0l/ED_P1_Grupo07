@@ -7,6 +7,7 @@ package com.mycompany.ed_p1_grupo07;
 import Clases.Catalogo;
 import Clases.LinkedList;
 import Clases.DoublyLinkedList;
+import Clases.List;
 import Clases.NodeList;
 import Clases.TipoVehi;
 import Clases.Usuario;
@@ -53,11 +54,23 @@ public class CatalogoController implements Initializable {
     private ComboBox<String> CbxOrder;
     @FXML
     public static DoublyLinkedList<Vehiculo> vehis = new DoublyLinkedList<>();
-    
     /**
      * Initializes the controller class.
      */
-    
+    public static boolean remove(Vehiculo vehiculo) {
+        // Iterador para recorrer la lista de vehículos
+        Iterator<Vehiculo> iterator = vehis.iterator();
+        while (iterator.hasNext()) {
+            Vehiculo v = iterator.next();
+            // Comparar el vehículo actual con el vehículo a eliminar usando el método equals
+            if (v.equals(vehiculo)) {
+                // Si son iguales, eliminar el vehículo usando el iterador
+                iterator.remove();
+                return true; // Indicar que se encontró y eliminó el vehículo
+            }
+        }
+        return false; // Indicar que no se encontró el vehículo a eliminar
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

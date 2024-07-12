@@ -7,15 +7,11 @@ package Clases;
 import com.mycompany.ed_p1_grupo07.App;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Objects;
 
 /**
@@ -184,14 +180,18 @@ public class Vehiculo implements Comparable<Vehiculo>{
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Vehiculo other = (Vehiculo) obj;
-        return Objects.equals(this.placa, other.placa);
+        Vehiculo other = (Vehiculo) obj;
+        return anio == other.anio &&
+               Double.compare(other.precio, precio) == 0 &&
+               km == other.km &&
+               Objects.equals(marca, other.marca) &&
+               Objects.equals(modelo, other.modelo) &&
+               Objects.equals(Subtipo, other.Subtipo) &&
+               Objects.equals(ubiActual, other.ubiActual) &&
+               Objects.equals(ciud, other.ciud);
     }
 
     public void guardarEnArchivo(String rutaArchivo) throws IOException {
@@ -200,6 +200,7 @@ public class Vehiculo implements Comparable<Vehiculo>{
         writer.newLine();
         writer.close();
     }
+    
 
     @Override
     public int compareTo(Vehiculo o) {
@@ -269,6 +270,33 @@ public class Vehiculo implements Comparable<Vehiculo>{
         }
         
     }
+    public static List<Vehiculo> leerDesdeArchivo(String rutaArchivo) throws IOException {
+        List<Vehiculo> vehiculos = new LinkedList<>();
+        File file = new File(rutaArchivo);
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Vehiculo vehiculo = Texto(line); 
+                vehiculos.addLast(vehiculo);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return vehiculos;
+    }
+    public static void guardarEnArchivo1(String rutaArchivo, List<Vehiculo> vehiculos) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo));
+        for (Vehiculo vehiculo : vehiculos) {
+            String linea = vehiculo.toString(); 
+            writer.write(linea);
+            writer.newLine();
+        }
+        writer.close();
+    }
+    
+    
     
     
 }

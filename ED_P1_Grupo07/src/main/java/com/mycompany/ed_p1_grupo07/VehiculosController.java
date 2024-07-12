@@ -4,20 +4,23 @@
  */
 package com.mycompany.ed_p1_grupo07;
 
-import Clases.DoublyCircularLinkedList;
 import Clases.DoublyCircularNodeList;
 import Clases.DoublyNodeList;
-import Clases.NodeList;
 import Clases.Vehiculo;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -143,11 +146,26 @@ public class VehiculosController implements Initializable {
     }
     
     public void removerVehi(){
+    }
+    public void editarVehi() throws IOException{
+       // Obtener el vehículo seleccionado actualmente
+        Vehiculo vehiculoSeleccionado = nV.getContent();
+
+        // Cargar la vista de edición de vehículo
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("EditarVehiculo.fxml"));
+        Parent root = loader.load();
+        EditarVehiculoController controller = loader.getController();
+
+        // Pasar el vehículo seleccionado al controlador de edición
+        controller.mostrarVeh(vehiculoSeleccionado);
+
+        // Mostrar la escena de edición de vehículo
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
         
     }
-    
-    public void editarVehi(){
-        
-    }
-    
 }
+

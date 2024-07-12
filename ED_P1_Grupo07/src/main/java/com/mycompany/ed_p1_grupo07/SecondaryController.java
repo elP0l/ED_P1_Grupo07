@@ -87,4 +87,9 @@ public class SecondaryController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void atras(ActionEvent event) throws IOException {
+        App.setRoot("primary");
+    }
 }
