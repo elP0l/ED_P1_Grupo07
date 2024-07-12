@@ -8,16 +8,13 @@ import Clases.DoublyCircularNodeList;
 import Clases.DoublyNodeList;
 import Clases.Vehiculo;
 import java.io.BufferedReader;
-<<<<<<< HEAD
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-=======
 import java.io.FileInputStream;
 import java.io.FileReader;
->>>>>>> 0b79a8bf448fc375e0cc2e1c54e2fe5396bfbda0
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;

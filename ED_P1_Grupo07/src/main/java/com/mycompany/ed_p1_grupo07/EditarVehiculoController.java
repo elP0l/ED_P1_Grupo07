@@ -22,8 +22,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,11 +29,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-<<<<<<< HEAD
-import javafx.stage.FileChooser;
-=======
-import javafx.stage.Stage;
->>>>>>> 0b79a8bf448fc375e0cc2e1c54e2fe5396bfbda0
 
 public class EditarVehiculoController implements Initializable {
 
