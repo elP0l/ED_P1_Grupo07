@@ -235,35 +235,6 @@ public class Vehiculo implements Comparable<Vehiculo>{
     
     public void cargarImagenes(String lineVehi){
         
-//        try {
-//            Files.walkFileTree(Paths.get(App.pathImagesXVehis), new SimpleFileVisitor<Path>() {
-//                @Override
-//                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-//                    if (file.getFileName().toString().equals(lineVehi)) {
-//                        System.out.println("Archivo encontrado: " + file.toAbsolutePath());
-//                        try {
-//                            LinkedList<String> lines = (LinkedList<String>) Files.readAllLines(file);
-//                            for (String line : lines) {
-//                                if (line.endsWith(".png")) {
-//                                    lImagenes.addLast(lineVehi+"/"+line);
-//                                }
-//                            }
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        return FileVisitResult.TERMINATE;
-//                    }
-//                    return FileVisitResult.CONTINUE;
-//                }
-//                @Override
-//                public FileVisitResult visitFileFailed(Path file, IOException exc) {
-//                    return FileVisitResult.CONTINUE;
-//                }
-//            });
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }        
-
         try {
             lImagenes.readAllPngFiles(Paths.get(App.pathImagesXVehis+"/"+lineVehi),lineVehi);
             System.out.println("Nombres de archivos PNG en el directorio:");
