@@ -15,6 +15,7 @@
                <children>
                   <ComboBox fx:id="CbxVehiculo" onAction="#filterVehiculo" prefWidth="150.0" />
                   <ComboBox fx:id="CbxOrder" onAction="#filterOrder" prefWidth="150.0" />
+                  <ComboBox fx:id="CbxFiltro" prefWidth="150.0" />
                </children>
             </HBox>
             <VBox fx:id="c" alignment="TOP_CENTER" prefHeight="298.0" prefWidth="586.0" spacing="15.0" />

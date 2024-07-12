@@ -47,6 +47,8 @@ public class CatalogoController implements Initializable {
     @FXML
     private ComboBox<String> CbxOrder;
     @FXML
+    private ComboBox<String> CbxFiltro;
+    @FXML
     public static DoublyLinkedList<Vehiculo> vehis = new DoublyLinkedList<>();
     /**
      * Initializes the controller class.
@@ -68,11 +70,12 @@ public class CatalogoController implements Initializable {
         // TODO
         CbxVehiculo.getItems().addAll("AUTOS","MOTOS","CAMIONETAS","MAQUINARIAS");
         CbxOrder.getItems().addAll("AÑO","PRECIO","KILOMETRAJE","MARCA");
+        CbxFiltro.getItems().addAll("SUV", "Sedan", "Hatchback", "Pick-up", "Convertible");
         contenedor.setSpacing(10);
         contenedor.setAlignment(Pos.TOP_CENTER);
         llenarContenedores(App.listaVehiculos);
         cargarVehiculos();
-        
+        CbxFiltro.setOnAction(event -> filtrarPorSubtipo());
     }    
     
     @FXML
@@ -171,59 +174,102 @@ public class CatalogoController implements Initializable {
         LinkedList<Vehiculo> lFiltrada = this.soloUnTipo(App.listaVehiculos);
         CatalogoController.vehis.setAll(lFiltrada);
         this.llenarContenedores(lFiltrada);
-        
-    }
 
+        // Aplicar filtro por subtipo si hay algo seleccionado en CbxFiltro
+        if (CbxFiltro.getSelectionModel().getSelectedItem() != null) {
+            filtrarPorSubtipo();
+        }
+    }
+    
+    @FXML
+    private void filtrarPorSubtipo() {
+        LinkedList<Vehiculo> lFiltrada = new LinkedList<>();
+        String selectedSubtipo = CbxFiltro.getSelectionModel().getSelectedItem();
+
+        for (Vehiculo vehi : CatalogoController.vehis) {
+            if (selectedSubtipo == null || vehi.getSubtipo().equals(selectedSubtipo)) {
+                lFiltrada.addLast(vehi);
+            }
+        }
+
+        // Mantener el orden basado en la selección de CbxOrder
+        String selectedOrder = CbxOrder.getSelectionModel().getSelectedItem();
+        if (selectedOrder != null) {
+            switch (selectedOrder) {
+                case "AÑO":
+                    ordenarLista(lFiltrada, Comparator.comparingInt(Vehiculo::getAnio));
+                    break;
+                case "PRECIO":
+                    ordenarLista(lFiltrada, Comparator.comparingDouble(Vehiculo::getPrecio));
+                    break;
+                case "KILOMETRAJE":
+                    ordenarLista(lFiltrada, Comparator.comparingInt(Vehiculo::getKm));
+                    break;
+                case "MARCA":
+                    ordenarLista(lFiltrada, Comparator.comparing(Vehiculo::getMarca));
+                    break;
+            }
+        }
+
+        llenarContenedores(lFiltrada);
+    }
+    
     @FXML
     private void filterOrder(ActionEvent event) throws IOException {
         CatalogoController.vehis.clear();
-        Comparator<Vehiculo> porAnio = (Vehiculo b1, Vehiculo b2)->{
+        Comparator<Vehiculo> porAnio = (Vehiculo b1, Vehiculo b2) -> {
             return Integer.compare(b1.getAnio(), b2.getAnio());
-         };
-        
-        Comparator<Vehiculo> porPrecio = (Vehiculo b1, Vehiculo b2)->{
-            return Double.compare(b1.getPrecio(),b2.getPrecio());
-         };
-        
-        Comparator<Vehiculo> porKm = (Vehiculo b1, Vehiculo b2)->{
+        };
+
+        Comparator<Vehiculo> porPrecio = (Vehiculo b1, Vehiculo b2) -> {
+            return Double.compare(b1.getPrecio(), b2.getPrecio());
+        };
+
+        Comparator<Vehiculo> porKm = (Vehiculo b1, Vehiculo b2) -> {
             return Integer.compare(b1.getKm(), b2.getKm());
         };
-        
-        Comparator<Vehiculo> porMarca = (Vehiculo b1, Vehiculo b2)->{
+
+        Comparator<Vehiculo> porMarca = (Vehiculo b1, Vehiculo b2) -> {
             return b1.getMarca().compareTo(b2.getMarca());
         };
-        
+
         LinkedList<Vehiculo> lFiltrada = new LinkedList<>();
-        lFiltrada.setAll(App.listaVehiculos);        
-        if (CbxVehiculo.getSelectionModel().getSelectedItem()!=null){
+        lFiltrada.setAll(App.listaVehiculos);
+        if (CbxVehiculo.getSelectionModel().getSelectedItem() != null) {
             lFiltrada = this.soloUnTipo(lFiltrada);
         }
-        String atrib = CbxVehiculo.getSelectionModel().getSelectedItem();
-        
+
+        String atrib = CbxOrder.getSelectionModel().getSelectedItem();
+
         if(CbxOrder.getSelectionModel().getSelectedItem().equals("AÑO")){
-            ordenarLista(lFiltrada,porAnio);            
+            ordenarLista(lFiltrada, porAnio);
             VentanaRangoController.aspect = "ANIO";
             VentanaRangoController.lXFilt = lFiltrada;
             App.setRoot("VentanaRango");
-            
-        }else if(CbxOrder.getSelectionModel().getSelectedItem().equals("PRECIO")){
-            ordenarLista(lFiltrada,porPrecio);
+
+        } else if(CbxOrder.getSelectionModel().getSelectedItem().equals("PRECIO")){
+            ordenarLista(lFiltrada, porPrecio);
             VentanaRangoController.aspect = "PRECIO";
             VentanaRangoController.lXFilt = lFiltrada;
             App.setRoot("VentanaRango");
 
-        }else if(CbxOrder.getSelectionModel().getSelectedItem().equals("KILOMETRAJE")){
-            ordenarLista(lFiltrada,porKm);
+        } else if(CbxOrder.getSelectionModel().getSelectedItem().equals("KILOMETRAJE")){
+            ordenarLista(lFiltrada, porKm);
             VentanaRangoController.aspect = "KILOMETRAJE";
             VentanaRangoController.lXFilt = lFiltrada;
             App.setRoot("VentanaRango");
-            
-        }else if(CbxOrder.getSelectionModel().getSelectedItem().equals("MARCA")){
-            ordenarLista(lFiltrada,porMarca);
+
+        } else if(CbxOrder.getSelectionModel().getSelectedItem().equals("MARCA")){
+            ordenarLista(lFiltrada, porMarca);
         }
 
         CatalogoController.vehis.setAll(lFiltrada);
         this.llenarContenedores(lFiltrada);
+
+        // Aplicar filtro por subtipo si hay algo seleccionado en CbxFiltro
+        if (CbxFiltro.getSelectionModel().getSelectedItem() != null) {
+            filtrarPorSubtipo();
+        }
     }
 
     @FXML
