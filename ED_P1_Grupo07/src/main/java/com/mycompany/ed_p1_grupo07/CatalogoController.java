@@ -4,20 +4,16 @@
  */
 package com.mycompany.ed_p1_grupo07;
 
-import Clases.Catalogo;
 import Clases.LinkedList;
 import Clases.DoublyLinkedList;
-import Clases.List;
 import Clases.NodeList;
 import Clases.TipoVehi;
-import Clases.Usuario;
 import Clases.Vehiculo;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.ResourceBundle;
@@ -27,10 +23,8 @@ import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;

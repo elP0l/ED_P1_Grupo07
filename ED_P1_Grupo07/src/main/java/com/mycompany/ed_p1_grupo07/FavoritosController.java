@@ -8,7 +8,6 @@ import Clases.LinkedList;
 import Clases.NodeList;
 import Clases.TipoVehi;
 import Clases.Vehiculo;
-import static com.mycompany.ed_p1_grupo07.CatalogoController.ordenarLista;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
