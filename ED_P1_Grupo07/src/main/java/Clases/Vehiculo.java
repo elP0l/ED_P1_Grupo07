@@ -229,6 +229,9 @@ public class Vehiculo implements Comparable<Vehiculo>{
         return v;       
         
     }
+    public String getCarpetaImagenes() {
+    return tipoVehi + "," + marca + "," + modelo + "," + Subtipo + "," + anio + "," + km + "," + ubiActual + "," + ciud + "," + precio;
+}
     
     public void cargarImagenes(String lineVehi){
         

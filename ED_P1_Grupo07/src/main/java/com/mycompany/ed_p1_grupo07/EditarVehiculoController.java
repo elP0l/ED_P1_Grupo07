@@ -22,11 +22,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
 public class EditarVehiculoController implements Initializable {
 
@@ -60,9 +65,6 @@ public class EditarVehiculoController implements Initializable {
     
     @FXML
     private Button boton;
-    
-    @FXML
-    private Button botonAtras;
     @FXML
     private TextField precio;
     @FXML
@@ -109,14 +111,6 @@ public class EditarVehiculoController implements Initializable {
             }
 
         });
-        botonAtras.setOnAction(event -> {
-            try {
-                App.setRoot("inicio");
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-         });
- 
     }
 
     private void fillModelos(String marca) {
@@ -146,32 +140,60 @@ public class EditarVehiculoController implements Initializable {
     }
     
    public void mostrarVeh(Vehiculo vehiculo) {
-    if (vehiculo != null) {
-        cbtipo.setValue(vehiculo.getTipoVehi().toString());
-        cbmarca.setValue(vehiculo.getMarca());
-        cbubicacion.setValue(vehiculo.getUbiActual());
-        cbsubtipo.setValue(vehiculo.getSubtipo());
-        cbmodelo.setValue(vehiculo.getModelo());
-        cbanio.setValue(String.valueOf(vehiculo.getAnio()));
-        precio.setText(String.valueOf(vehiculo.getPrecio()));
-        cbciudad.setValue(vehiculo.getCiud());
-        tfkm.setText(String.valueOf(vehiculo.getKm()));
-        cbkm.setValue("km");
-        this.vehi=vehiculo;
-      
-    } else {
-        System.out.println("El vehículo proporcionado es nulo");
-    }
+        if (vehiculo != null) {
+            cbtipo.setValue(vehiculo.getTipoVehi().toString());
+            cbmarca.setValue(vehiculo.getMarca());
+            cbubicacion.setValue(vehiculo.getUbiActual());
+            cbsubtipo.setValue(vehiculo.getSubtipo());
+            cbmodelo.setValue(vehiculo.getModelo());
+            cbanio.setValue(String.valueOf(vehiculo.getAnio()));
+            precio.setText(String.valueOf(vehiculo.getPrecio()));
+            cbciudad.setValue(vehiculo.getCiud());
+            tfkm.setText(String.valueOf(vehiculo.getKm()));
+            cbkm.setValue("km");
+            this.vehi=vehiculo;
+            mostrarImagenes(vehiculo); 
+        } else {
+            System.out.println("El vehículo proporcionado es nulo");
+        }
    }
+   private void mostrarImagenes(Vehiculo vehiculo) {
+        String nombreCarpeta = construirNombreCarpeta(vehiculo);
+        String pathBase = "src/main/resources/imagesXVehis/";
+        File carpeta = new File(pathBase + nombreCarpeta);
+        if (carpeta.exists() && carpeta.isDirectory()) {
+            File[] archivos = carpeta.listFiles();
+            if (archivos != null) {
+                for (File archivo : archivos) {
+                    if (archivo.isFile() && archivo.getName().endsWith(".png")) {
+                        Image imagen = new Image(archivo.toURI().toString());
+                        ImageView imageView = new ImageView(imagen);
+                        imageView.setFitWidth(100);
+                        imageView.setFitHeight(100);
+                        imageView.setPreserveRatio(true);
+                        imageView.setSmooth(true);
+                        imageView.setCache(true);
+                        imgContainer.getChildren().add(imageView);
+                    }
+                }
+            }
+        }
+    }
 
     public void editarVehiculo() throws IOException{
         String tipo = cbtipo.getValue();
+        
         String marca = cbmarca.getValue();
+        
         String modelo = cbmodelo.getValue();
+       
         String subtipo= cbsubtipo.getValue();
+        
         int anio = Integer.parseInt(cbanio.getValue());
+      
         int km = Integer.parseInt(tfkm.getText());
         String ubicacion = cbubicacion.getValue();
+        
         String ciu = cbciudad.getValue();
         double prec=Double.parseDouble(precio.getText()); 
         TipoVehi tipoVehi = TipoVehi.valueOf(tipo.toUpperCase());
@@ -238,7 +260,6 @@ public class EditarVehiculoController implements Initializable {
             alert.setContentText("Por favor, completa todos los campos antes de continuar.");
             alert.showAndWait();
         } else {
-            // Actualizar vehículo con los datos ingresados
             editarVehiculo();
         }
     }
@@ -246,10 +267,6 @@ public class EditarVehiculoController implements Initializable {
     private void registrar(ActionEvent event) throws IOException {
          handleButtonClick();
     }
+    
 
-    @FXML
-    private void atras(ActionEvent event) throws IOException {
-        App.setRoot("vehiculos");
-    }
-   
 }

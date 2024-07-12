@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.Iterator;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -180,6 +181,18 @@ public class LinkedList<E> implements List<E> {
     public void clear() {
         header = null;
         last = null;
+    }
+    
+    public void add1(ImageView imageView) {
+        NodeList newNode = new NodeList(imageView);
+        if (header == null) {
+            header = newNode;
+            last = newNode;
+        } else {
+            last.setNext(newNode);
+            last = newNode;
+        }
+        size();
     }
     @Override
     public void add(int index, E element) {

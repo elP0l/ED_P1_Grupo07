@@ -7,7 +7,12 @@ package com.mycompany.ed_p1_grupo07;
 import Clases.DoublyCircularNodeList;
 import Clases.DoublyNodeList;
 import Clases.Vehiculo;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -145,22 +150,79 @@ public class VehiculosController implements Initializable {
         PrimaryController.u.getVehiPref().addLast(nV.getContent());
     }
     
-    public void removerVehi(){
-    }
-    public void editarVehi() throws IOException{
-       // Obtener el vehículo seleccionado actualmente
+     public void removerVehi() {
         Vehiculo vehiculoSeleccionado = nV.getContent();
+        boolean removed = CatalogoController.remove(vehiculoSeleccionado);
+        if (removed) {
+            actualizarArchivoVehiculos(vehiculoSeleccionado);
+            eliminarCarpetaImagenes(vehiculoSeleccionado);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Eliminación Exitosa");
+            alert.setHeaderText(null);
+            alert.setContentText("Vehículo eliminado correctamente.");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("No se encontró el vehículo a eliminar.");
+            alert.showAndWait();
+        }
+    }
 
-        // Cargar la vista de edición de vehículo
+    private void actualizarArchivoVehiculos(Vehiculo vehiculoAEliminar) {
+        File inputFile = new File(App.pathFiles + "vehiculos.txt");
+        File tempFile = new File(App.pathFiles + "vehiculos_temp.txt");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+            
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                Vehiculo vehi = Vehiculo.Texto(linea);
+                if (!vehi.equals(vehiculoAEliminar)) {
+                    writer.write(linea);
+                    writer.newLine();
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error al actualizar el archivo de vehículos.");
+            e.printStackTrace();
+        }
+        if (!inputFile.delete()) {
+            System.out.println("No se pudo eliminar el archivo original.");
+        }
+        if (!tempFile.renameTo(inputFile)) {
+            System.out.println("No se pudo renombrar el archivo temporal.");
+        }
+    }
+
+    private void eliminarCarpetaImagenes(Vehiculo vehiculo) {
+        String carpetaImagenes = App.pathImagesXVehis+ vehiculo.getCarpetaImagenes();
+        File carpeta = new File(carpetaImagenes);
+
+        if (carpeta.exists()) {
+            for (File file : carpeta.listFiles()) {
+                if (!file.delete()) {
+                    System.out.println("No se pudo eliminar la imagen: " + file.getName());
+                }
+            }
+            if (!carpeta.delete()) {
+                System.out.println("No se pudo eliminar la carpeta de imágenes.");
+            }
+        } else {
+            System.out.println("La carpeta de imágenes no existe.");
+        }
+    }
+
+    public void editarVehi() throws IOException{
+        Vehiculo vehiculoSeleccionado = nV.getContent();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("EditarVehiculo.fxml"));
         Parent root = loader.load();
         EditarVehiculoController controller = loader.getController();
-
-        // Pasar el vehículo seleccionado al controlador de edición
         controller.mostrarVeh(vehiculoSeleccionado);
-
-        // Mostrar la escena de edición de vehículo
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

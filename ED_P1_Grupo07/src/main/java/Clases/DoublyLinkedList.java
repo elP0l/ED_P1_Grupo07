@@ -6,6 +6,7 @@ package Clases;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  *
@@ -151,8 +152,15 @@ public class DoublyLinkedList<E> implements List<E> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public E get(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+     public E get(int index) {
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size());
+        }
+        DoublyNodeList<E> current = header;
+        for (int i = 0; i < index; i++) {
+            current = current.getNext();
+        }
+        return current.getContent();
     }
 
     @Override
@@ -162,8 +170,50 @@ public class DoublyLinkedList<E> implements List<E> {
 
     @Override
     public Iterator<E> iterator() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return new Iterator<E>() {
+            private DoublyNodeList<E> current = header;
+            private DoublyNodeList<E> lastReturned = null;
+        @Override
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            @Override
+            public E next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                lastReturned = current;
+                E element = current.getContent();
+                current = current.getNext();
+                return element;
+            }
+
+            @Override
+            public void remove() {
+                if (lastReturned == null) {
+                    throw new IllegalStateException();
+                }
+                DoublyNodeList<E> nextNode = lastReturned.getNext();
+                DoublyNodeList<E> prevNode = lastReturned.getPrevious();
+
+                if (prevNode == null) { // Removing the header
+                    header = nextNode;
+                } else {
+                    prevNode.setNext(nextNode);
+                }
+
+                if (nextNode == null) { // Removing the last
+                    last = prevNode;
+                } else {
+                    nextNode.setPrevious(prevNode);
+                }
+
+                lastReturned = null; // reset lastReturned
+            }
+        };
     }
+
 
     @Override
     public E find(Comparator<E> comp, E element) {

@@ -208,41 +208,52 @@ public class VentaVehiculoController implements Initializable {
          handleButtonClick();
     }
 
-    @FXML
+     @FXML
     private void subirImagen(ActionEvent event) {
-        int imagre = 0;
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imágenes", "*.png"));
         List<File> imagenesElegidas = fileChooser.showOpenMultipleDialog(boton.getScene().getWindow());
+
         if (imagenesElegidas != null && !imagenesElegidas.isEmpty()) {
-            for (File imagenElegida : imagenesElegidas) {
+            int contadorImagenes = lImagenes.size(); // Obtener la cantidad actual de imágenes
+            int imagenesRestantes = 3 - contadorImagenes; // Calcular cuántas imágenes más se pueden subir
+
+            for (int i = 0; i < imagenesElegidas.size() && i < imagenesRestantes; i++) {
+                File imagenElegida = imagenesElegidas.get(i);
+
                 try {
                     File destino = new File(App.pathImagesXVehis + "/" + imagenElegida.getName());
                     Files.copy(imagenElegida.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
                     lImagenes.addLast(destino.getName());
+
                     Image imagen = new Image(imagenElegida.toURI().toString());
                     ImageView imageView = new ImageView(imagen);
-                    imageView.setFitWidth(100); 
+                    imageView.setFitWidth(100);
                     imageView.setFitHeight(100);
                     imageView.setPreserveRatio(true);
                     imageView.setSmooth(true);
                     imageView.setCache(true);
                     VBox.setMargin(imageView, new Insets(10));
-                    imgContainer.getChildren().add(imageView); 
-                    imagre++;
-                }catch (IOException e) {
+                    imgContainer.getChildren().add(imageView);
+
+                    contadorImagenes++; // Incrementar el contador de imágenes subidas
+                } catch (IOException e) {
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText("Error al subir imagen");
                     alert.setContentText("No se pudo subir la imagen: " + e.getMessage());
                     alert.showAndWait();
                 }
-                
-           }
+            }
+            if (lImagenes.size() >= 3) {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Límite alcanzado");
+                alert.setHeaderText(null);
+                alert.setContentText("Ya se han subido las 3 imágenes permitidas.");
+                alert.showAndWait();
+            }
         }
     }
 }
-
-
 
     

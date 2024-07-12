@@ -64,18 +64,7 @@
                         <Insets bottom="5.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Button fx:id="botonAtras" mnemonicParsing="false" onAction="#atras" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: red;" text="Atras" textFill="#fffafa">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets top="10.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" />
                </children>
                <padding>
                   <Insets left="20.0" top="30.0" />

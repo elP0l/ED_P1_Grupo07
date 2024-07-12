@@ -58,19 +58,17 @@ public class CatalogoController implements Initializable {
      * Initializes the controller class.
      */
     public static boolean remove(Vehiculo vehiculo) {
-        // Iterador para recorrer la lista de vehículos
         Iterator<Vehiculo> iterator = vehis.iterator();
         while (iterator.hasNext()) {
             Vehiculo v = iterator.next();
-            // Comparar el vehículo actual con el vehículo a eliminar usando el método equals
             if (v.equals(vehiculo)) {
-                // Si son iguales, eliminar el vehículo usando el iterador
                 iterator.remove();
-                return true; // Indicar que se encontró y eliminó el vehículo
+                return true; 
             }
         }
-        return false; // Indicar que no se encontró el vehículo a eliminar
+        return false; 
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
