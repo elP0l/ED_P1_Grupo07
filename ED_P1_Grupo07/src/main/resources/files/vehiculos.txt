@@ -2,3 +2,6 @@ AUTOS,Honda,Civic,Sedan,2019,12000,Ecuador,Guayaquil,14000.0
 AUTOS,Honda,CR-V,SUV,2017,100000,Ecuador,Guayaquil,3400.0
 AUTOS,Chevrolet,Equinox,SUV,2017,39000,Ecuador,Guayaquil,2400.0
 AUTOS,Toyota,Camry,Sedan,2018,34000,Ecuador,Manta,1500.0
+AUTOS,Ford,Fiesta,Hatchback,2020,61000,Ecuador,Manta,14000.0
+AUTOS,Nissan,Versa,Sedan,2019,124000,Ecuador,Guayaquil,17000.0
+MOTOS,Honda,Accord,SUV,2023,1555,Ecuador,Ambato,15815.0

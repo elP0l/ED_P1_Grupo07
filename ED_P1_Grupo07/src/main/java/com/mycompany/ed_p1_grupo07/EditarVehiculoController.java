@@ -31,7 +31,11 @@ import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+<<<<<<< HEAD
 import javafx.stage.FileChooser;
+=======
+import javafx.stage.Stage;
+>>>>>>> 0b79a8bf448fc375e0cc2e1c54e2fe5396bfbda0
 
 public class EditarVehiculoController implements Initializable {
 

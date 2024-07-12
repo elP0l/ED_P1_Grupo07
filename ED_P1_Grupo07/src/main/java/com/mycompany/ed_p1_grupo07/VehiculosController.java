@@ -8,14 +8,21 @@ import Clases.DoublyCircularNodeList;
 import Clases.DoublyNodeList;
 import Clases.Vehiculo;
 import java.io.BufferedReader;
+<<<<<<< HEAD
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+=======
+import java.io.FileInputStream;
+import java.io.FileReader;
+>>>>>>> 0b79a8bf448fc375e0cc2e1c54e2fe5396bfbda0
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Stack;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,8 +30,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -37,6 +46,8 @@ public class VehiculosController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    @FXML
+    private Stage stage;
     @FXML
     DoublyNodeList<Vehiculo> nV = CatalogoController.vehis.getHeader();
     @FXML
@@ -91,6 +102,11 @@ public class VehiculosController implements Initializable {
             recorrido.setText(""+v.getKm());
             precio.setText(""+v.getPrecio());
         }else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Limite");
+            alert.setHeaderText("Ultimo vehículo");
+            alert.setContentText("Es el vehiculo final en la lista.");
+            alert.showAndWait();
             System.out.println("No es posible ejecutar esta opcion, es el limite");
         }
     }
@@ -114,6 +130,11 @@ public class VehiculosController implements Initializable {
             recorrido.setText(""+v.getKm());
             precio.setText(""+v.getPrecio());
         }else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Limite");
+            alert.setHeaderText("Ultimo vehículo");
+            alert.setContentText("Es el vehiculo final en la lista.");
+            alert.showAndWait();
             System.out.println("No es posible ejecutar esta opcion, es el limite");
         }
     }
@@ -148,6 +169,36 @@ public class VehiculosController implements Initializable {
     
     public void agregarVehi(){
         PrimaryController.u.getVehiPref().addLast(nV.getContent());
+        mostrarVehiculos();        
+    }
+    
+        @FXML
+     private void mostrarVehiculos() {
+        stage = new Stage();
+        ListView<String> listView = new ListView<>();
+
+        Stack<String> lines = armarStack();
+        listView.getItems().addAll(lines);
+
+        VBox vbox = new VBox(listView);
+        Scene scene = new Scene(vbox, 300, 400);
+
+        stage.setScene(scene);
+        stage.setTitle("Favoritos");
+        stage.show();
+    }
+     
+    @FXML
+    private Stack<String> armarStack(){
+        Stack<String> lineas = new Stack<>();
+        DoublyNodeList<Vehiculo> actual = nV;
+        while(actual != null){
+            Vehiculo v = actual.getContent();
+            String linea = v.getTipoVehi().toString() +","+ v.getMarca()+","+v.getModelo()+","+v.getAnio()+","+v.getKm();
+            lineas.add(linea);
+            actual = actual.getNext();
+        }
+        return lineas;
     }
     
      public void removerVehi() {

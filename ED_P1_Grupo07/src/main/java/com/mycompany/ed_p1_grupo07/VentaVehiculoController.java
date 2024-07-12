@@ -12,7 +12,9 @@ package com.mycompany.ed_p1_grupo07;
 import Clases.LinkedList;
 import Clases.Vehiculo;
 import Clases.TipoVehi;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -30,14 +32,22 @@ import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Stack;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class VentaVehiculoController implements Initializable {
+    
+    @FXML
+    private Stage stage;
 
     @FXML
     private ComboBox<String> cbtipo;
@@ -85,27 +95,57 @@ public class VentaVehiculoController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Llenar ComboBox tipo
-        List<String> tipos = Arrays.asList("Autos", "Motos", "Camionetas", "Maquinarias");
-        cbtipo.setItems(FXCollections.observableArrayList(tipos));
-        // Llenar ComboBox marca
-        List<String> marcas = Arrays.asList("Toyota", "Honda", "Ford", "Chevrolet", "Nissan");
-        cbmarca.setItems(FXCollections.observableArrayList(marcas));
-        // Llenar ComboBox año
-        List<String> anios = Arrays.asList("2020", "2019", "2018", "2017", "2016");
-        cbanio.setItems(FXCollections.observableArrayList(anios));
-        // Llenar ComboBox ubicación
-        List<String> ubicaciones = Arrays.asList("Ecuador");
-        cbubicacion.setItems(FXCollections.observableArrayList(ubicaciones));
-        // Llenar ComboBox subtipo
-        List<String> subtipos = Arrays.asList("Sedan", "SUV", "Pick-up", "Hatchback", "Convertible");
-        cbsubtipo.setItems(FXCollections.observableArrayList(subtipos));
-        // Llenar ComboBox kilometraje
-        List<String> kms = Arrays.asList("Km", "Millas");
-        cbkm.setItems(FXCollections.observableArrayList(kms));
-        // Llenar ComboBox ciudad
-        List<String> ciudades = Arrays.asList("Guayaquil", "Cuenca", "Quito", "Ambato", "Manta");
-        cbciudad.setItems(FXCollections.observableArrayList(ciudades));
+        mostrarVehiculos();
+        LinkedList<String> tipos = new LinkedList<>();
+        tipos.addLast("Autos");
+        tipos.addLast("Motos");
+        tipos.addLast("Camionetas");
+        tipos.addLast("Maquinarias");
+
+        LinkedList<String> marcas = new LinkedList<>();
+        marcas.addLast("Toyota");
+        marcas.addLast("Honda");
+        marcas.addLast("Ford");
+        marcas.addLast("Chevrolet");
+        marcas.addLast("Nissan");
+
+        LinkedList<String> anios = new LinkedList<>();
+        anios.addLast("2024");
+        anios.addLast("2023");
+        anios.addLast("2022");
+        anios.addLast("2021");
+        anios.addLast("2020");
+
+        LinkedList<String> ubicaciones = new LinkedList<>();
+        ubicaciones.addLast("Ecuador");
+
+        LinkedList<String> subtipos = new LinkedList<>();
+        subtipos.addLast("Sedan");
+        subtipos.addLast("SUV");
+        subtipos.addLast("Pick-up");
+        subtipos.addLast("Hatchback");
+        subtipos.addLast("Convertible");
+
+        LinkedList<String> kms = new LinkedList<>();
+        kms.addLast("Km");
+        kms.addLast("Millas");
+
+        LinkedList<String> ciudades = new LinkedList<>();
+        ciudades.addLast("Guayaquil");
+        ciudades.addLast("Cuenca");
+        ciudades.addLast("Quito");
+        ciudades.addLast("Ambato");
+        ciudades.addLast("Manta");
+
+        // Convert LinkedLists to ObservableLists
+        cbtipo.setItems(FXCollections.observableArrayList(toObservableList(tipos)));
+        cbmarca.setItems(FXCollections.observableArrayList(toObservableList(marcas)));
+        cbanio.setItems(FXCollections.observableArrayList(toObservableList(anios)));
+        cbubicacion.setItems(FXCollections.observableArrayList(toObservableList(ubicaciones)));
+        cbsubtipo.setItems(FXCollections.observableArrayList(toObservableList(subtipos)));
+        cbkm.setItems(FXCollections.observableArrayList(toObservableList(kms)));
+        cbciudad.setItems(FXCollections.observableArrayList(toObservableList(ciudades)));
+
         // Agregar listener para cbmarca que llene cbmodelo basado en la marca seleccionada
         cbmarca.setOnAction(event -> {
             String selectedMarca = cbmarca.getSelectionModel().getSelectedItem();
@@ -122,6 +162,7 @@ public class VentaVehiculoController implements Initializable {
         });
         botonAtras.setOnAction(event -> {
             try {
+                stage.close();
                 App.setRoot("inicio");
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -130,6 +171,14 @@ public class VentaVehiculoController implements Initializable {
         imagen.setOnAction(this::subirImagen);
     }
 
+    private ObservableList<String> toObservableList(LinkedList<String> list) {
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+        for (String item : list) {
+            observableList.add(item);
+        }
+        return observableList;
+    }
+    
     private void fillModelos(String marca) {
         // Ejemplo de modelos basado en la marca seleccionada
         List<String> modelos;
@@ -195,6 +244,10 @@ public class VentaVehiculoController implements Initializable {
                 Files.move(origen, destino, StandardCopyOption.REPLACE_EXISTING);
             }
             vehiculo.guardarEnArchivo(App.pathFiles + "vehiculos.txt");
+            
+            //
+            stage.close();
+            mostrarVehiculos();
       
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Éxito");
@@ -207,6 +260,39 @@ public class VentaVehiculoController implements Initializable {
     private void registrar(ActionEvent event) throws IOException {
          handleButtonClick();
     }
+    
+    @FXML
+     private void mostrarVehiculos() {
+        stage = new Stage();
+        ListView<String> listView = new ListView<>();
+
+        Stack<String> lines = leerArchivo(App.pathFiles+"vehiculos.txt");
+        listView.getItems().addAll(lines);
+
+        VBox vbox = new VBox(listView);
+        Scene scene = new Scene(vbox, 300, 400);
+
+        stage.setScene(scene);
+        stage.setTitle("Lista de Vehículos");
+        stage.show();
+    }
+    
+    @FXML
+    private Stack<String> leerArchivo(String filePath) {
+        Stack<String> lineas = new Stack<>();
+        FXCollections.observableArrayList(lineas);
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                lineas.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return lineas;
+    }
+    
 
      @FXML
     private void subirImagen(ActionEvent event) {
