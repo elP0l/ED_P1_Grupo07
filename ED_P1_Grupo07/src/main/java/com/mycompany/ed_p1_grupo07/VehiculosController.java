@@ -7,10 +7,14 @@ package com.mycompany.ed_p1_grupo07;
 import Clases.DoublyCircularNodeList;
 import Clases.DoublyNodeList;
 import Clases.Vehiculo;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Stack;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,8 +22,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -32,7 +38,8 @@ public class VehiculosController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    
+    @FXML
+    private Stage stage;
     @FXML
     DoublyNodeList<Vehiculo> nV = CatalogoController.vehis.getHeader();
     @FXML
@@ -154,6 +161,36 @@ public class VehiculosController implements Initializable {
     
     public void agregarVehi(){
         PrimaryController.u.getVehiPref().addLast(nV.getContent());
+        mostrarVehiculos();        
+    }
+    
+        @FXML
+     private void mostrarVehiculos() {
+        stage = new Stage();
+        ListView<String> listView = new ListView<>();
+
+        Stack<String> lines = armarStack();
+        listView.getItems().addAll(lines);
+
+        VBox vbox = new VBox(listView);
+        Scene scene = new Scene(vbox, 300, 400);
+
+        stage.setScene(scene);
+        stage.setTitle("Favoritos");
+        stage.show();
+    }
+     
+    @FXML
+    private Stack<String> armarStack(){
+        Stack<String> lineas = new Stack<>();
+        DoublyNodeList<Vehiculo> actual = nV;
+        while(actual != null){
+            Vehiculo v = actual.getContent();
+            String linea = v.getTipoVehi().toString() +","+ v.getMarca()+","+v.getModelo()+","+v.getAnio()+","+v.getKm();
+            lineas.add(linea);
+            actual = actual.getNext();
+        }
+        return lineas;
     }
     
     public void removerVehi(){
