@@ -6,6 +6,8 @@ package com.mycompany.ed_p1_grupo07;
 
 import Clases.DoublyCircularNodeList;
 import Clases.DoublyNodeList;
+import Clases.EscritorArchivoFav;
+import Clases.NodeList;
 import Clases.Vehiculo;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -166,15 +168,20 @@ public class VehiculosController implements Initializable {
     
     public void agregarVehi(){
         PrimaryController.u.getVehiPref().addLast(nV.getContent());
-        mostrarVehiculos();        
+        try {
+            EscritorArchivoFav.guardarEnArchivo(nV.getContent());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        mostrarVehiculos();
     }
     
-        @FXML
-     private void mostrarVehiculos() {
+    @FXML
+    private void mostrarVehiculos() {
         stage = new Stage();
         ListView<String> listView = new ListView<>();
 
-        Stack<String> lines = armarStack();
+        Stack<String> lines = leerArchivo(App.pathFiles+"favoritos.txt");
         listView.getItems().addAll(lines);
 
         VBox vbox = new VBox(listView);
@@ -184,17 +191,23 @@ public class VehiculosController implements Initializable {
         stage.setTitle("Favoritos");
         stage.show();
     }
-     
+    
     @FXML
-    private Stack<String> armarStack(){
+    private Stack<String> leerArchivo(String filePath) {
         Stack<String> lineas = new Stack<>();
-        DoublyNodeList<Vehiculo> actual = nV;
-        while(actual != null){
-            Vehiculo v = actual.getContent();
-            String linea = v.getTipoVehi().toString() +","+ v.getMarca()+","+v.getModelo()+","+v.getAnio()+","+v.getKm();
-            lineas.add(linea);
-            actual = actual.getNext();
+        FXCollections.observableArrayList(lineas);
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] separado = line.split(";");
+                if (separado[0].equals(PrimaryController.u.getNombre())){
+                    lineas.add(separado[1]);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
         return lineas;
     }
     
