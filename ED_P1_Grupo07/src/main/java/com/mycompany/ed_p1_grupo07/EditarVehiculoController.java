@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class EditarVehiculoController implements Initializable {
 

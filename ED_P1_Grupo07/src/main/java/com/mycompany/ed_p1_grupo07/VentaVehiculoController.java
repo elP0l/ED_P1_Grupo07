@@ -12,7 +12,9 @@ package com.mycompany.ed_p1_grupo07;
 import Clases.LinkedList;
 import Clases.Vehiculo;
 import Clases.TipoVehi;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -30,14 +32,21 @@ import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Stack;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class VentaVehiculoController implements Initializable {
+    
+    @FXML
+    private Stage stage;
 
     @FXML
     private ComboBox<String> cbtipo;
@@ -85,6 +94,7 @@ public class VentaVehiculoController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        mostrarVehiculos();
         // Llenar ComboBox tipo
         List<String> tipos = Arrays.asList("Autos", "Motos", "Camionetas", "Maquinarias");
         cbtipo.setItems(FXCollections.observableArrayList(tipos));
@@ -122,6 +132,7 @@ public class VentaVehiculoController implements Initializable {
         });
         botonAtras.setOnAction(event -> {
             try {
+                stage.close();
                 App.setRoot("inicio");
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -195,6 +206,10 @@ public class VentaVehiculoController implements Initializable {
                 Files.move(origen, destino, StandardCopyOption.REPLACE_EXISTING);
             }
             vehiculo.guardarEnArchivo(App.pathFiles + "vehiculos.txt");
+            
+            //
+            stage.close();
+            mostrarVehiculos();
       
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Éxito");
@@ -207,6 +222,39 @@ public class VentaVehiculoController implements Initializable {
     private void registrar(ActionEvent event) throws IOException {
          handleButtonClick();
     }
+    
+    @FXML
+     private void mostrarVehiculos() {
+        stage = new Stage();
+        ListView<String> listView = new ListView<>();
+
+        Stack<String> lines = leerArchivo(App.pathFiles+"vehiculos.txt");
+        listView.getItems().addAll(lines);
+
+        VBox vbox = new VBox(listView);
+        Scene scene = new Scene(vbox, 300, 400);
+
+        stage.setScene(scene);
+        stage.setTitle("Lista de Vehículos");
+        stage.show();
+    }
+    
+    @FXML
+    private Stack<String> leerArchivo(String filePath) {
+        Stack<String> lineas = new Stack<>();
+        FXCollections.observableArrayList(lineas);
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                lineas.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return lineas;
+    }
+    
 
     @FXML
     private void subirImagen(ActionEvent event) {

@@ -32,6 +32,7 @@ public class VehiculosController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    
     @FXML
     DoublyNodeList<Vehiculo> nV = CatalogoController.vehis.getHeader();
     @FXML
@@ -86,6 +87,11 @@ public class VehiculosController implements Initializable {
             recorrido.setText(""+v.getKm());
             precio.setText(""+v.getPrecio());
         }else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Limite");
+            alert.setHeaderText("Ultimo vehículo");
+            alert.setContentText("Es el vehiculo final en la lista.");
+            alert.showAndWait();
             System.out.println("No es posible ejecutar esta opcion, es el limite");
         }
     }
@@ -109,6 +115,11 @@ public class VehiculosController implements Initializable {
             recorrido.setText(""+v.getKm());
             precio.setText(""+v.getPrecio());
         }else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Limite");
+            alert.setHeaderText("Ultimo vehículo");
+            alert.setContentText("Es el vehiculo final en la lista.");
+            alert.showAndWait();
             System.out.println("No es posible ejecutar esta opcion, es el limite");
         }
     }
