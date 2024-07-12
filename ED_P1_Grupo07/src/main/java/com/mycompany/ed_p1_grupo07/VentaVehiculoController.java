@@ -33,6 +33,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Stack;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -95,27 +96,56 @@ public class VentaVehiculoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         mostrarVehiculos();
-        // Llenar ComboBox tipo
-        List<String> tipos = Arrays.asList("Autos", "Motos", "Camionetas", "Maquinarias");
-        cbtipo.setItems(FXCollections.observableArrayList(tipos));
-        // Llenar ComboBox marca
-        List<String> marcas = Arrays.asList("Toyota", "Honda", "Ford", "Chevrolet", "Nissan");
-        cbmarca.setItems(FXCollections.observableArrayList(marcas));
-        // Llenar ComboBox año
-        List<String> anios = Arrays.asList("2020", "2019", "2018", "2017", "2016");
-        cbanio.setItems(FXCollections.observableArrayList(anios));
-        // Llenar ComboBox ubicación
-        List<String> ubicaciones = Arrays.asList("Ecuador");
-        cbubicacion.setItems(FXCollections.observableArrayList(ubicaciones));
-        // Llenar ComboBox subtipo
-        List<String> subtipos = Arrays.asList("Sedan", "SUV", "Pick-up", "Hatchback", "Convertible");
-        cbsubtipo.setItems(FXCollections.observableArrayList(subtipos));
-        // Llenar ComboBox kilometraje
-        List<String> kms = Arrays.asList("Km", "Millas");
-        cbkm.setItems(FXCollections.observableArrayList(kms));
-        // Llenar ComboBox ciudad
-        List<String> ciudades = Arrays.asList("Guayaquil", "Cuenca", "Quito", "Ambato", "Manta");
-        cbciudad.setItems(FXCollections.observableArrayList(ciudades));
+        LinkedList<String> tipos = new LinkedList<>();
+        tipos.addLast("Autos");
+        tipos.addLast("Motos");
+        tipos.addLast("Camionetas");
+        tipos.addLast("Maquinarias");
+
+        LinkedList<String> marcas = new LinkedList<>();
+        marcas.addLast("Toyota");
+        marcas.addLast("Honda");
+        marcas.addLast("Ford");
+        marcas.addLast("Chevrolet");
+        marcas.addLast("Nissan");
+
+        LinkedList<String> anios = new LinkedList<>();
+        anios.addLast("2024");
+        anios.addLast("2023");
+        anios.addLast("2022");
+        anios.addLast("2021");
+        anios.addLast("2020");
+
+        LinkedList<String> ubicaciones = new LinkedList<>();
+        ubicaciones.addLast("Ecuador");
+
+        LinkedList<String> subtipos = new LinkedList<>();
+        subtipos.addLast("Sedan");
+        subtipos.addLast("SUV");
+        subtipos.addLast("Pick-up");
+        subtipos.addLast("Hatchback");
+        subtipos.addLast("Convertible");
+
+        LinkedList<String> kms = new LinkedList<>();
+        kms.addLast("Km");
+        kms.addLast("Millas");
+
+        LinkedList<String> ciudades = new LinkedList<>();
+        ciudades.addLast("Guayaquil");
+        ciudades.addLast("Cuenca");
+        ciudades.addLast("Quito");
+        ciudades.addLast("Ambato");
+        ciudades.addLast("Manta");
+
+        // Convert LinkedLists to ObservableLists
+        cbtipo.setItems(FXCollections.observableArrayList(toObservableList(tipos)));
+        cbmarca.setItems(FXCollections.observableArrayList(toObservableList(marcas)));
+        cbanio.setItems(FXCollections.observableArrayList(toObservableList(anios)));
+        cbubicacion.setItems(FXCollections.observableArrayList(toObservableList(ubicaciones)));
+        cbsubtipo.setItems(FXCollections.observableArrayList(toObservableList(subtipos)));
+        cbkm.setItems(FXCollections.observableArrayList(toObservableList(kms)));
+        cbciudad.setItems(FXCollections.observableArrayList(toObservableList(ciudades)));
+
         // Agregar listener para cbmarca que llene cbmodelo basado en la marca seleccionada
         cbmarca.setOnAction(event -> {
             String selectedMarca = cbmarca.getSelectionModel().getSelectedItem();
@@ -141,6 +171,14 @@ public class VentaVehiculoController implements Initializable {
         imagen.setOnAction(this::subirImagen);
     }
 
+    private ObservableList<String> toObservableList(LinkedList<String> list) {
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+        for (String item : list) {
+            observableList.add(item);
+        }
+        return observableList;
+    }
+    
     private void fillModelos(String marca) {
         // Ejemplo de modelos basado en la marca seleccionada
         List<String> modelos;
