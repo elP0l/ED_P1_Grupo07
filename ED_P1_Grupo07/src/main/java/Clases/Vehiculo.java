@@ -22,20 +22,14 @@ import java.util.Objects;
     
 public class Vehiculo implements Comparable<Vehiculo>{
     private String ciud;
-    private String placa;
     private String marca;
     private String modelo;
     private int anio;
-    private double peso;
     private String ubiActual;
     private double precio;
     private int km;
     private TipoVehi tipoVehi;
-    private String color;
     private String Subtipo;
-    private int numLlantas;
-    LinkedList<Accidente> lAccidentes = new LinkedList<>();
-    LinkedList<Servicio> lServicios = new LinkedList<>();
     DoublyCircularLinkedList<String> lImagenes = new DoublyCircularLinkedList<>();
 
     public Vehiculo( String ubiActual,String ciud, String marca, String modelo, int anio, TipoVehi tipoVehi, String Subtipo, double precio) {
@@ -48,16 +42,6 @@ public class Vehiculo implements Comparable<Vehiculo>{
         this.Subtipo = Subtipo;
         this.precio = precio;
     }
-
-    
-    public String getPlaca() {
-        return placa;
-    }
-
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
-
     public String getMarca() {
         return marca;
     }
@@ -81,15 +65,6 @@ public class Vehiculo implements Comparable<Vehiculo>{
     public void setAnio(int anio) {
         this.anio = anio;
     }
-
-    public double getPeso() {
-        return peso;
-    }
-
-    public void setPeso(double peso) {
-        this.peso = peso;
-    }
-
     public String getUbiActual() {
         return ubiActual;
     }
@@ -97,15 +72,6 @@ public class Vehiculo implements Comparable<Vehiculo>{
     public void setUbiActual(String ubiActual) {
         this.ubiActual = ubiActual;
     }
-
-    public LinkedList<Accidente> getlAccidentes() {
-        return lAccidentes;
-    }
-
-    public LinkedList<Servicio> getlServicios() {
-        return lServicios;
-    }
-
     public DoublyCircularLinkedList<String> getlImagenes() {
         return lImagenes;
     }
@@ -134,23 +100,6 @@ public class Vehiculo implements Comparable<Vehiculo>{
         this.tipoVehi = tipoVehi;
         
     }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public int getNumLlantas() {
-        return numLlantas;
-    }
-
-    public void setNumLlantas(int numLlantas) {
-        this.numLlantas = numLlantas;
-    }
-
     public String getSubtipo() {
         return Subtipo;
     }
@@ -166,15 +115,6 @@ public class Vehiculo implements Comparable<Vehiculo>{
     public void setCiud(String ciud) {
         this.ciud = ciud;
     }
-
-    public void setlAccidentes(LinkedList<Accidente> lAccidentes) {
-        this.lAccidentes = lAccidentes;
-    }
-
-    public void setlServicios(LinkedList<Servicio> lServicios) {
-        this.lServicios = lServicios;
-    }
-    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
