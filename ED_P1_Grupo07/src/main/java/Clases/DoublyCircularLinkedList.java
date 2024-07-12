@@ -58,19 +58,11 @@ public class DoublyCircularLinkedList<E> implements List<E> {
         if(e!=null){
             DoublyCircularNodeList<E> newNode = new DoublyCircularNodeList<>(e);
             if(last!=null){
-//                if(last==last.getNext()){
-//                    newNode.setNext(last.getNext());
-//                    newNode.setPrevious(last);
-//                    last.setNext(newNode);
-//                    last.setPrevious(newNode);
-//                    
-//                }else{
                 newNode.setNext(last.getNext());
                 last.getNext().setPrevious(newNode);
                 newNode.setPrevious(last);
                 last.setNext(newNode);
                 last = newNode;
-                //}
             }else{
                 newNode.setNext(newNode);
                 newNode.setPrevious(newNode);
@@ -116,19 +108,17 @@ public class DoublyCircularLinkedList<E> implements List<E> {
                 if (lastReturned == null) {
                     throw new IllegalStateException("remove() can only be called once after next()");
                 }
-                // Adjust the pointers to remove lastReturned from the list
+
                 DoublyCircularNodeList<E> previous = lastReturned.getPrevious();
                 DoublyCircularNodeList<E> next = lastReturned.getNext();
 
                 previous.setNext(next);
                 next.setPrevious(previous);
 
-                // Adjust last if lastReturned was the last element
                 if (lastReturned == last) {
                     last = previous;
                 }
 
-                // Clean up lastReturned
                 lastReturned.setNext(null);
                 lastReturned.setPrevious(null);
                 lastReturned = null;
@@ -192,7 +182,7 @@ public class DoublyCircularLinkedList<E> implements List<E> {
             sb.append(current.getNext().getContent()).append(",");
             current = current.getNext();
         }
-        // Eliminar la última coma si hay elementos en la lista
+
         if (sb.length() > 0) {
             sb.deleteCharAt(sb.length() - 1);
         }
